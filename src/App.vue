@@ -1,19 +1,17 @@
 <script setup lang="ts">
+import TheHeader from "@/components/TheHeader.vue";
+import TheSudoku from "./components/TheSudoku.vue";
+import TheFooter from "@/components/TheFooter.vue";
 </script>
 
 <template>
-  <header>
-    HelloWorld msg="You did it!"
-  </header>
-
+  <TheHeader />
   <main>
-    TheWelcome
+    <TheSudoku />
   </main>
+  <TheFooter />
 </template>
 
 <style scoped>
-
-@media (min-width: 1024px) {
-
-}
+@media (min-width: 1024px) {}
 </style>
