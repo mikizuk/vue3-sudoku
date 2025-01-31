@@ -1,15 +1,15 @@
 <template>
   <section>
-    TheControls
+    <p>TheControls</p>
   </section>
   <section>
-    TheBoard
+    <p>TheBoard</p>
   </section>
   <section>
-    NumberInputs
+    <p>NumberInputs</p>
   </section>
   <section>
-    RecordsTable
+    <p>RecordsTable</p>
   </section>
 </template>
 
@@ -17,4 +17,8 @@
 
 </script>
 
-<style scoped></style>
+<style scoped>
+p {
+  color: var(--cta)
+}
+</style>

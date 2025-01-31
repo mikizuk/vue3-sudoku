@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TheHeader from "@/components/TheHeader.vue";
-import TheSudoku from "./components/TheSudoku.vue";
+import TheSudoku from "@/components/TheSudoku.vue";
 import TheFooter from "@/components/TheFooter.vue";
 </script>
 
@@ -11,7 +11,3 @@ import TheFooter from "@/components/TheFooter.vue";
   </main>
   <TheFooter />
 </template>
-
-<style scoped>
-@media (min-width: 1024px) {}
-</style>
