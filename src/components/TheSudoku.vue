@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, } from 'vue';
+import { useSudokuStore } from '@/stores/sudoku';
+import { storeToRefs } from 'pinia';
 import TheIntro from '@/components/TheIntro.vue';
 
-const showIntro = ref<null | boolean>(null);
+const store = useSudokuStore();
+const { isIntroShown } = storeToRefs(store);
 
-onMounted(() => showIntro.value = true)
-const foo = () => {
-  console.info('showIntro!',);
-  showIntro.value = false
-}
+onMounted(() => store.showIntro())
 </script>
 
 <template>
   <Transition name="slide" mode="out-in">
-    <section v-if="showIntro">
-      <TheIntro @close="foo" />
+    <section v-if="isIntroShown">
+      <TheIntro />
     </section>
-    <section v-else-if="showIntro === false">
+    <section v-else-if="isIntroShown === false">
       Game
     </section>
   </Transition>

@@ -1,16 +1,13 @@
 <script setup lang="ts">
+import { useSudokuStore } from '@/stores/sudoku';
 import RetroButton from '@/slots/RetroButton.vue';
 
-const emit = defineEmits<{
-  (e: 'close'): void
-}>()
-
-const close = () => emit('close')
+const store = useSudokuStore();
 
 </script>
 
 <template>
   <div>Difficulty</div>
-  <RetroButton @click="close()">Start/reset game</RetroButton>
+  <RetroButton @click="store.hideIntro()">Start/reset game</RetroButton>
 
 </template>
