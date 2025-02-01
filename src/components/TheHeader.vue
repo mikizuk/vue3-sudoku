@@ -4,31 +4,25 @@ import EmojiText from '@/slots/EmojiText.vue';
 </script>
 
 <template>
-  <header class="header">
 
-    <EmojiText>
-      <template #emoji>🕹️</template>
-      <template #strong>Sudoku</template>
-    </EmojiText>
-    <nav class="nav">
-      <ul class="nav-list">
-        <li>
-          <EmojiText>
-            <template #emoji>🙋</template>
-            <template #text>Scoring explained</template>
-          </EmojiText>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <EmojiText>
+    <template #emoji>🕹️</template>
+    <template #strong>Sudoku</template>
+  </EmojiText>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li>
+        <EmojiText>
+          <template #emoji>🙋</template>
+          <!-- <template #text>Scoring explained</template> -->
+          <template #text>Scoring</template>
+        </EmojiText>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
 .nav {
   .nav-list {
     display: flex;

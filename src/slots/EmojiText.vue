@@ -34,6 +34,14 @@
 
 .slot__strong,
 .slot__text {
-  line-height: 25px;
+  line-height: 19px;
+
+  @media (min-width: 769px) {
+    line-height: 25px;
+  }
+
+  @media (min-width: 1280px) {
+    line-height: 35px;
+  }
 }
 </style>
