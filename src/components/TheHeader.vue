@@ -11,7 +11,7 @@ import EmojiText from '@/slots/EmojiText.vue';
   </EmojiText>
   <nav class="nav">
     <ul class="nav-list">
-      <li>
+      <li class="nav-list__item">
         <EmojiText>
           <template #emoji>🙋</template>
           <!-- <template #text>Scoring explained</template> -->
@@ -28,10 +28,5 @@ import EmojiText from '@/slots/EmojiText.vue';
     display: flex;
     gap: 0.7rem;
   }
-
-  /* nav-list__item */
-  // .nav-list__link {  }
-
-  // .nav-list__link:hover {  }
 }
 </style>

@@ -1,24 +1,12 @@
 @import './_reset.css';
+@import './animations.scss';
+@import './colors.scss';
+@import './rwd.scss';
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-:root {
-  color-scheme: dark light;
-
-  --background-primary: #e9e9e9; /* #f9f9f9 */
-  --background-secondary: #f9f9f9;
-  --border: #e0e0e0;
-  --card: #ffffff;
-  --copy-primary: #242424;
-  --copy-secondary: #6c6c6c;
-  --cta: #0073e6;
-  --cta-active: #005bb5;
-  --cta-text: #ffffff;
-  background: var(--background-primary);
 }
 
 body {
@@ -43,14 +31,4 @@ body {
   min-height: 100vh;
   max-width: 1280px;
   margin: 0 auto;
-  font-size: 0.7rem;
-
-  /* @media (min-width: 481px) {} */
-  @media (min-width: 769px) {
-    font-size: 1.1rem;
-  }
-
-  @media (min-width: 1280px) {
-    font-size: 1.4rem;
-  }
 }

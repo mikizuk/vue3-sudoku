@@ -22,7 +22,6 @@ import EmojiText from '@/slots/EmojiText.vue';
     <EmojiText>
       <template #emoji>📜</template>
       <template #text>Rules</template>
-      <!-- <template #text>Game rules</template> -->
     </EmojiText>
   </a>
 </template>

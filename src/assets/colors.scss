@@ -1,0 +1,14 @@
+:root {
+  color-scheme: dark light;
+
+  --background-primary: #e9e9e9; /* #f9f9f9 */
+  --background-secondary: #f9f9f9;
+  --border: #e0e0e0;
+  --card: #ffffff;
+  --copy-primary: #242424;
+  --copy-secondary: #6c6c6c;
+  --cta: #0073e6;
+  --cta-active: #005bb5;
+  --cta-text: #ffffff;
+  background: var(--background-primary);
+}
