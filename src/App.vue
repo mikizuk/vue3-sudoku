@@ -5,39 +5,7 @@ import TheFooter from '@/components/TheFooter.vue'
 </script>
 
 <template>
-  <header class="header">
-    <TheHeader />
-  </header>
-
-  <main class="main">
-    <TheSudoku />
-  </main>
-
-  <footer class="footer">
-    <TheFooter />
-  </footer>
+  <TheHeader />
+  <TheSudoku />
+  <TheFooter />
 </template>
-
-<style lang="scss" scoped>
-.header {
-  position: sticky;
-  top: 0;
-  background: var(--background-primary);
-
-  display: flex;
-  justify-content: space-between;
-}
-
-.main {
-  flex: 1;
-}
-
-.footer {
-  position: sticky;
-  bottom: 0;
-  background: var(--background-primary);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-</style>

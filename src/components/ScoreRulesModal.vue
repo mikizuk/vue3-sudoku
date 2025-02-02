@@ -5,45 +5,11 @@ const store = useSudokuStore()
 const { isModalOpen } = storeToRefs(store)
 </script>
 
-<style scoped>
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.game-rules {
-  font-size: 0.5rem;
-  line-height: 0.6rem;
-}
-
-h3 {
-  font-size: 1rem;
-  padding-block: 0.8rem;
-}
-
-ul {
-  padding-bottom: 0.4rem;
-}
-</style>
-
 <template>
   <Transition name="grows-out" mode="out-in">
     <Teleport to="body">
-      <div class="modal-backdrop" v-if="isModalOpen">
-        <div class="modal" v-if="isModalOpen" @click="store.toggleModal()">
+      <div class="modal-backdrop" v-if="isModalOpen" @click="store.toggleModal()">
+        <div class="modal" v-if="isModalOpen">
           <article class="game-rules">
             <h3>Rules</h3>
             <ul>
@@ -99,3 +65,49 @@ ul {
     </Teleport>
   </Transition>
 </template>
+
+<style scoped>
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--charcoal-gray);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: var(--light-gray);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.game-rules {
+  font-size: 0.5rem;
+  line-height: 0.6rem;
+}
+
+h3 {
+  font-size: 1rem;
+  padding-block: 0.8rem;
+}
+
+ul {
+  padding-bottom: 0.4rem;
+}
+
+.grows-out-enter-from,
+.grows-out-leave-to {
+  opacity: 0;
+  transform: scale(1.5);
+}
+
+.grows-out-enter-active,
+.grows-out-leave-active {
+  transition: 0.3s ease-out;
+}
+</style>

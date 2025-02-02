@@ -33,8 +33,8 @@ const onStartGame = () => {
 <style scoped>
 .select,
 .select > option {
-  background-color: inherit;
-  border: 2px solid var(--copy-primary);
+  background-color: var(--soft-gray);
+  border: 2px solid var(--charcoal-gray);
   padding: 5px 10px;
   margin: 5px;
   border-radius: 3px;
@@ -46,7 +46,7 @@ const onStartGame = () => {
   width: fit-content;
 
   option {
-    background-color: aqua;
+    background-color: var(--sky-blue);
   }
 }
 </style>

@@ -30,6 +30,7 @@
 
 .slot__strong,
 .slot__text {
+  height: 100%;
   line-height: 19px;
 
   @media (min-width: 769px) {
