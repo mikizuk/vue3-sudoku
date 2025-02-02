@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { onMounted, } from 'vue';
-import { useSudokuStore } from '@/stores/sudoku';
-import { storeToRefs } from 'pinia';
-import TheIntro from '@/components/TheIntro.vue';
-import ScoreRulesModal from '@/components/ScoreRulesModal.vue';
-import GameDifficulty from '@/components/GameDifficulty.vue';
+import { onMounted } from 'vue'
+import { useSudokuStore } from '@/stores/sudoku'
+import { storeToRefs } from 'pinia'
+import TheIntro from '@/components/TheIntro.vue'
+import ScoreRulesModal from '@/components/ScoreRulesModal.vue'
+import GameDifficulty from '@/components/GameDifficulty.vue'
 
-const store = useSudokuStore();
-const { isIntroShown } = storeToRefs(store);
+const store = useSudokuStore()
+const { isIntroShown } = storeToRefs(store)
 
 onMounted(() => store.showIntro())
 </script>
@@ -20,7 +20,6 @@ onMounted(() => store.showIntro())
     <section v-else-if="isIntroShown === false">
       <GameDifficulty />
       <p>TheBoard</p>
-
     </section>
   </Transition>
 

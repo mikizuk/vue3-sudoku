@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useSudokuStore } from '@/stores/sudoku';
-const store = useSudokuStore();
-import EmojiText from '@/slots/EmojiText.vue';
-
+import { useSudokuStore } from '@/stores/sudoku'
+const store = useSudokuStore()
+import EmojiText from '@/slots/EmojiText.vue'
 </script>
 
 <template>
-
   <EmojiText>
     <template #emoji>🕹️</template>
     <template #strong>Sudoku</template>
@@ -33,9 +31,11 @@ import EmojiText from '@/slots/EmojiText.vue';
 .nav-list__item {
   box-shadow: inset 0 0 0 0 var(--cta);
   color: var(--cta);
-  padding: 0 .25rem;
-  margin: 0 -.25rem;
-  transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+  padding: 0 0.25rem;
+  margin: 0 -0.25rem;
+  transition:
+    color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
   cursor: pointer;
 }
 

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import TheHeader from "@/components/TheHeader.vue";
-import TheSudoku from "@/components/TheSudoku.vue";
-import TheFooter from "@/components/TheFooter.vue";
+import TheHeader from '@/components/TheHeader.vue'
+import TheSudoku from '@/components/TheSudoku.vue'
+import TheFooter from '@/components/TheFooter.vue'
 </script>
 
 <template>
-
   <header class="header">
     <TheHeader />
   </header>
@@ -17,7 +16,6 @@ import TheFooter from "@/components/TheFooter.vue";
   <footer class="footer">
     <TheFooter />
   </footer>
-
 </template>
 
 <style lang="scss" scoped>
@@ -28,7 +26,6 @@ import TheFooter from "@/components/TheFooter.vue";
 
   display: flex;
   justify-content: space-between;
-
 }
 
 .main {
@@ -42,6 +39,5 @@ import TheFooter from "@/components/TheFooter.vue";
   width: 100%;
   display: flex;
   justify-content: center;
-
 }
 </style>

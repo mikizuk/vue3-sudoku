@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useSudokuStore } from '@/stores/sudoku';
-import { storeToRefs } from 'pinia';
-const store = useSudokuStore();
-const { isModalOpen } = storeToRefs(store);
-
+import { useSudokuStore } from '@/stores/sudoku'
+import { storeToRefs } from 'pinia'
+const store = useSudokuStore()
+const { isModalOpen } = storeToRefs(store)
 </script>
 
 <style scoped>
@@ -25,20 +24,18 @@ const { isModalOpen } = storeToRefs(store);
   border-radius: 5px;
 }
 
-
 .game-rules {
-  font-size: .5rem;
-  line-height: .6rem;
+  font-size: 0.5rem;
+  line-height: 0.6rem;
 }
 
 h3 {
   font-size: 1rem;
-  padding-block: .8rem;
-
+  padding-block: 0.8rem;
 }
 
 ul {
-  padding-bottom: .4rem;
+  padding-bottom: 0.4rem;
 }
 </style>
 
@@ -76,7 +73,6 @@ ul {
               <li>Each hint reveals a correct cell value</li>
             </ul>
 
-
             <h3>Scoring System</h3>
 
             <ul>
@@ -97,7 +93,6 @@ ul {
               <li>Only successful game completions are eligible</li>
               <li>Tracks scores across all difficulty levels</li>
             </ul>
-
           </article>
         </div>
       </div>

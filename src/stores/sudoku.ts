@@ -1,19 +1,19 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-export const difficulties: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert'];
-export type Difficulty = 'testing' | 'beginner' | 'intermediate' | 'hard' | 'expert';
+export const difficulties: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert']
+export type Difficulty = 'testing' | 'beginner' | 'intermediate' | 'hard' | 'expert'
 
 interface SudokuState {
-  isIntroShown: null | boolean;
-  isModalOpen: boolean;
-  difficulty: Difficulty;
-  difficulties: Difficulty[];
-  isGameInprogress: boolean;
+  isIntroShown: null | boolean
+  isModalOpen: boolean
+  difficulty: Difficulty
+  difficulties: Difficulty[]
+  isGameInprogress: boolean
   // isGamePaused: boolean;
 }
 
 export const useSudokuStore = defineStore('sudoku', {
-  state: (): SudokuState =>  ({
+  state: (): SudokuState => ({
     isIntroShown: null,
     isModalOpen: false,
     difficulty: 'beginner' as Difficulty,
@@ -24,25 +24,24 @@ export const useSudokuStore = defineStore('sudoku', {
   actions: {
     // intro shown
     showIntro() {
-      this.isIntroShown = true;
+      this.isIntroShown = true
     },
     hideIntro() {
-      this.isIntroShown = false;
+      this.isIntroShown = false
     },
     // modal open
     toggleModal() {
-      this.isModalOpen = !this.isModalOpen;
+      this.isModalOpen = !this.isModalOpen
     },
     // difficulty
     setDifficulty(level: Difficulty) {
-      this.difficulty = level;
+      this.difficulty = level
     },
     // start & pause game
     startGame() {
-      this.isGameInprogress = true;
+      this.isGameInprogress = true
       // this.isIntroShown = false;
-      this.hideIntro();
-
-    }
-  }
+      this.hideIntro()
+    },
+  },
 })

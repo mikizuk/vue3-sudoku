@@ -1,6 +1,5 @@
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
 <template>
   <button class="retro-button">
     <slot />

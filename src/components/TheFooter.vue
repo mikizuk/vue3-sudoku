@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import EmojiText from '@/slots/EmojiText.vue';
-
+import EmojiText from '@/slots/EmojiText.vue'
 </script>
 
 <template>
@@ -35,9 +34,11 @@ import EmojiText from '@/slots/EmojiText.vue';
 .footer__link {
   box-shadow: inset 0 0 0 0 var(--cta);
   color: var(--cta);
-  padding: 0 .25rem;
-  margin: 0 -.25rem;
-  transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+  padding: 0 0.25rem;
+  margin: 0 -0.25rem;
+  transition:
+    color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
 }
 
 .footer__link:hover {
