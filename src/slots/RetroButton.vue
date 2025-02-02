@@ -11,6 +11,7 @@
 .retro-button {
   /* color: #fff; */
   /* background: linear-gradient(315deg, #42d392 25%, #647eff); */
+  background-color: inherit;
   border: 2px solid var(--copy-primary);
   padding: 5px 10px;
   margin: 5px;

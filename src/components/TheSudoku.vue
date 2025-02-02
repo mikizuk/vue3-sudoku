@@ -4,6 +4,7 @@ import { useSudokuStore } from '@/stores/sudoku';
 import { storeToRefs } from 'pinia';
 import TheIntro from '@/components/TheIntro.vue';
 import ScoreRulesModal from '@/components/ScoreRulesModal.vue';
+import GameDifficulty from '@/components/GameDifficulty.vue';
 
 const store = useSudokuStore();
 const { isIntroShown } = storeToRefs(store);
@@ -13,11 +14,13 @@ onMounted(() => store.showIntro())
 
 <template>
   <Transition name="slide" mode="out-in">
-    <section v-if="isIntroShown">
+    <section v-if="isIntroShown" class="intro-section">
       <TheIntro />
     </section>
     <section v-else-if="isIntroShown === false">
-      <h2>Game</h2>
+      <GameDifficulty />
+      <p>TheBoard</p>
+
     </section>
   </Transition>
 
@@ -26,7 +29,6 @@ onMounted(() => store.showIntro())
   </section>
   
   <section>
-    <p>TheBoard</p>
   </section>
   
   <section>
@@ -39,3 +41,12 @@ onMounted(() => store.showIntro())
 
   <ScoreRulesModal />
 </template>
+
+<style scoped>
+.intro-section {
+  /* display: grid; */
+  /* flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+</style>
