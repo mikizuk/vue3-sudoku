@@ -26,7 +26,7 @@ const onStartGame = () => {
     </option>
   </select>
 
-  <start v-if="!store.isGameInprogress" for="difficulty">And start the game!</start>
+  <span v-if="!store.isGameInprogress" for="difficulty">And start the game!</span>
   <RetroButton v-if="!store.isGameInprogress" @click="onStartGame">Start</RetroButton>
   <RetroButton v-else @click="store.hideIntro()">Reset game</RetroButton>
 

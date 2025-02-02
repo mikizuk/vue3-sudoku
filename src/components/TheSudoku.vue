@@ -43,10 +43,10 @@ onMounted(() => store.showIntro())
 </template>
 
 <style scoped>
-.intro-section {
-  /* display: grid; */
-  /* flex-direction: column;
+/* .intro-section { */
+/* display: grid; */
+/* flex-direction: column;
   justify-content: center;
   align-items: center; */
-}
+/* } */
 </style>
