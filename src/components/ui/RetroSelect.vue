@@ -25,14 +25,15 @@ const onSelect = (event: Event) => {
 
 <style lang="scss" scoped>
 .retro-select {
+  color: var(--charcoal-gray);
   background-color: var(--soft-gray);
   border: 2px solid var(--charcoal-gray);
-  padding: 5px 10px;
-  margin: 5px;
   border-radius: 3px;
-  font-family: 'Press Start 2P', serif;
-  font-weight: 200;
-  font-style: normal;
+  padding: 5px 10px;
+  // margin: 5px;
+  // font-family: 'Press Start 2P', serif;
+  // font-weight: 200;
+  // font-style: normal;
   cursor: pointer;
   font-size: 0.7rem;
   width: fit-content;

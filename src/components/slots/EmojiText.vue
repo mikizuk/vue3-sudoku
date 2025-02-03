@@ -20,8 +20,8 @@
 .slot-wrapper {
   display: flex;
   gap: 0.4rem;
-  height: 25px;
-  padding: 2px;
+  /* height: 25px; */
+  /* padding: 2px; */
 }
 
 .slot__emoji {
@@ -34,11 +34,11 @@
   line-height: 19px;
 
   @media (min-width: 769px) {
-    line-height: 25px;
+    /* line-height: 25px; */
   }
 
   @media (min-width: 1280px) {
-    line-height: 35px;
+    /* line-height: 35px; */
   }
 }
 </style>

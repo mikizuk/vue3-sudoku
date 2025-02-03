@@ -4,7 +4,7 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 import TheIntro from '@/components/layout/TheIntro.vue'
 import ScoreRulesModal from '@/components/ui/ScoreRulesModal.vue'
-import GameDifficulty from '@/components/ui/GameDifficulty.vue'
+import GameControls from '@/components/layout/GameControls.vue'
 
 const store = useSudokuStore()
 const { isIntroShown } = storeToRefs(store)
@@ -19,24 +19,18 @@ onMounted(() => store.showIntro())
         <TheIntro />
       </section>
       <section v-else-if="isIntroShown === false">
-        <GameDifficulty />
-        <p>TheBoard</p>
+        <GameControls />
       </section>
     </Transition>
-
-    <!-- <section>
-      <p>TheControls</p>
-    </section>
-    
+    <!-- 
     <section>
+      <TheBoard />
     </section>
-    
     <section>
-      <p>TheDigits</p>
+      <TheDigits />
     </section>
-    
     <section>
-      <p>RecordsTable</p>
+      <RecordsTable/>
     </section> -->
 
     <ScoreRulesModal />
@@ -47,25 +41,26 @@ onMounted(() => store.showIntro())
 main {
   flex: 1;
 
-  padding-block: 20%;
+  padding-block: 20px;
   padding-inline: 8px;
 
-  @media (min-width: 769px) {
-    padding-block: 22%;
-    padding-inline: 12px;
+  .intro-section {
+    padding-block: 20%;
   }
+  // @media (min-width: 769px) {
+  //   padding-block: 22%;
+  //   padding-inline: 12px;
+  // }
 
-  @media (min-width: 1280px) {
-    padding-block: 15%;
-    padding-inline: 20px;
-  }
+  // @media (min-width: 1280px) {
+  //   padding-block: 15%;
+  //   padding-inline: 20px;
+  // }
 }
-/* .intro-section { */
 /* display: grid; */
 /* flex-direction: column;
   justify-content: center;
   align-items: center; */
-/* } */
 
 .slide-enter-from,
 .slide-leave-to {
