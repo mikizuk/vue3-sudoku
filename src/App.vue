@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import TheHeader from '@/components/TheHeader.vue'
-import TheSudoku from '@/components/TheSudoku.vue'
-import TheFooter from '@/components/TheFooter.vue'
+import TheHeader from '@/components/layout/TheHeader.vue'
+import TheSudoku from '@/components/layout/TheSudoku.vue'
+import TheFooter from '@/components/layout/TheFooter.vue'
 </script>
 
 <template>

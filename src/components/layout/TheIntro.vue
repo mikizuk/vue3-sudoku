@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GameDifficulty from '@/components/GameDifficulty.vue'
+import GameDifficulty from '@/components/ui/GameDifficulty.vue'
 </script>
 
 <template>

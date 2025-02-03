@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSudokuStore, type Difficulty } from '@/stores/sudoku'
-import RetroButton from '@/slots/RetroButton.vue'
+import RetroButton from '@/components/slots/RetroButton.vue'
 
 const store = useSudokuStore()
 

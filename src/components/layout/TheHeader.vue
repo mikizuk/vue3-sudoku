@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSudokuStore } from '@/stores/sudoku'
 const store = useSudokuStore()
-import EmojiText from '@/slots/EmojiText.vue'
+import EmojiText from '@/components/slots/EmojiText.vue'
 </script>
 
 <template>

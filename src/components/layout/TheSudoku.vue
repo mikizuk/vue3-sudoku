@@ -2,9 +2,9 @@
 import { onMounted } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
-import TheIntro from '@/components/TheIntro.vue'
-import ScoreRulesModal from '@/components/ScoreRulesModal.vue'
-import GameDifficulty from '@/components/GameDifficulty.vue'
+import TheIntro from '@/components/layout/TheIntro.vue'
+import ScoreRulesModal from '@/components/ui/ScoreRulesModal.vue'
+import GameDifficulty from '@/components/ui/GameDifficulty.vue'
 
 const store = useSudokuStore()
 const { isIntroShown } = storeToRefs(store)

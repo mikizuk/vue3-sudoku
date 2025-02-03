@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import EmojiText from '@/slots/EmojiText.vue'
+import EmojiText from '@/components/slots/EmojiText.vue'
 </script>
 
 <template>
