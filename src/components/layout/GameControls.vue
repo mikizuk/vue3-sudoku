@@ -13,9 +13,12 @@ const onTogglePause = () => {
 const onHintClick = () => {
   store.useHint()
 }
+const onEndGame = () => {
+  console.info('end game!')
+}
 </script>
 <template>
-  <div class="game-controls">
+  <div class="controls">
     <GameDifficulty />
     <RetroButton @click="onTogglePause">
       <EmojiText v-if="isGamePaused">
@@ -27,6 +30,7 @@ const onHintClick = () => {
         <template #text>Pause</template>
       </EmojiText>
     </RetroButton>
+    <RetroButton @click="onEndGame">End</RetroButton>
     <RetroButton @click="onHintClick">
       <EmojiText>
         <template #emoji>💡</template>
@@ -37,7 +41,7 @@ const onHintClick = () => {
 </template>
 
 <style lang="scss" scoped>
-.game-controls {
+.controls {
   // border: 1px solid red;
   display: flex;
   flex-wrap: wrap;

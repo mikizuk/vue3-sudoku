@@ -1,3 +1,5 @@
+import { type Ref } from 'vue'
+import { useTimer } from '@/composables/useTimer'
 import { defineStore } from 'pinia'
 
 export const difficulties: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert']
@@ -11,7 +13,10 @@ interface SudokuState {
   difficulty: Difficulty
   difficulties: Difficulty[]
   hintsRemaining: number
+  board: number[][]
+  gameTime: Ref<number, number>
 }
+const { elapsedTime, startTime, pauseTime, resetTime } = useTimer()
 
 export const useSudokuStore = defineStore('sudoku', {
   state: (): SudokuState => ({
@@ -21,6 +26,10 @@ export const useSudokuStore = defineStore('sudoku', {
     difficulty: 'beginner' as Difficulty,
     difficulties,
     hintsRemaining: 10,
+    board: Array(9)
+      .fill(null)
+      .map(() => Array(9).fill(0)),
+    gameTime: elapsedTime,
   }),
 
   getters: {
@@ -30,6 +39,13 @@ export const useSudokuStore = defineStore('sudoku', {
     canUseHint(): boolean {
       return this.hintsRemaining > 0
       // and selected cell is empty TODO:
+    },
+
+    formattedTime(): string {
+      const minutes = Math.floor(this.gameTime / 60)
+      const seconds = this.gameTime % 60
+
+      return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
     },
     isGamePlaying(): boolean {
       return this.gameStatus === 'playing'
@@ -52,7 +68,7 @@ export const useSudokuStore = defineStore('sudoku', {
     hideIntro() {
       this.isIntro = false
     },
-    // modal open
+    // modal
     toggleModal() {
       this.isModalOpen = !this.isModalOpen
     },
@@ -60,25 +76,31 @@ export const useSudokuStore = defineStore('sudoku', {
     setDifficulty(level: Difficulty) {
       this.difficulty = level
     },
-    // start & reset game
+    // game controls
     startGame() {
       this.hideIntro()
       this.changeGameStatus('playing')
+      startTime()
     },
     resetGame() {
-      console.info('reset!')
-      // reset whole game! // TODO:
-      // reset hintsRemaining // TODO:
+      // TODO: reset whole game! mind current difficulty, reset points
+      this.changeGameStatus('playing')
+      resetTime()
+      this.resetHintsNumber()
     },
-    //  pause game
     togglePause() {
       if (this.isGamePlaying) {
         this.gameStatus = 'paused'
+        pauseTime()
       } else if (this.isGamePaused) {
         this.gameStatus = 'playing'
+        startTime()
       }
     },
     // hints
+    resetHintsNumber() {
+      this.hintsRemaining = 10
+    },
     useHint() {
       if (!this.canUseHint || !this.isGamePlaying) return
 
