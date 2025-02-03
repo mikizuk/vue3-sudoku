@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 import TheIntro from '@/components/layout/TheIntro.vue'
+import TheBoard from '@/components/layout/TheBoard.vue'
 import ScoreRulesModal from '@/components/ui/ScoreRulesModal.vue'
 import GameControls from '@/components/layout/GameControls.vue'
 
@@ -22,10 +23,10 @@ onMounted(() => store.showIntro())
         <GameControls />
       </section>
     </Transition>
-    <!-- 
     <section>
       <TheBoard />
     </section>
+    <!-- 
     <section>
       <TheDigits />
     </section>
@@ -45,7 +46,8 @@ main {
   padding-inline: 8px;
 
   .intro-section {
-    padding-block: 20%;
+    padding-top: 20%;
+    padding-bottom: 10%;
   }
   // @media (min-width: 769px) {
   //   padding-block: 22%;

@@ -9,7 +9,8 @@ interface SudokuState {
   difficulty: Difficulty
   difficulties: Difficulty[]
   isGameInprogress: boolean
-  // isGamePaused: boolean;
+  isPaused: boolean
+  hintsRemaining: number
 }
 
 export const useSudokuStore = defineStore('sudoku', {
@@ -19,7 +20,16 @@ export const useSudokuStore = defineStore('sudoku', {
     difficulty: 'beginner' as Difficulty,
     difficulties,
     isGameInprogress: false,
+    isPaused: false,
+    hintsRemaining: 10,
   }),
+
+  getters: {
+    canUseHint(): boolean {
+      return this.hintsRemaining > 0
+      // and selected cell is empty TODO:
+    },
+  },
 
   actions: {
     // intro shown
@@ -37,11 +47,30 @@ export const useSudokuStore = defineStore('sudoku', {
     setDifficulty(level: Difficulty) {
       this.difficulty = level
     },
-    // start & pause game
+    // start & reset game
     startGame() {
       this.isGameInprogress = true
       // this.isIntroShown = false;
       this.hideIntro()
+    },
+    resetGame() {
+      console.info('reset!')
+      // reset whole game! // TODO:
+      // reset hintsRemaining // TODO:
+    },
+    //  pause game
+    togglePause() {
+      this.isPaused = !this.isPaused
+    },
+    // hints
+    useHint() {
+      if (!this.canUseHint || this.isPaused) return
+
+      this.hintsRemaining -= 1
+      // give hint TODO:
+      // add penalty TODO:
+      // chnage score TODO:
+      // fill the board TODO:
     },
   },
 })

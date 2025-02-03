@@ -9,12 +9,8 @@ const store = useSudokuStore()
 const onDifficultyChange = (value: Difficulty): void => {
   store.setDifficulty(value)
 }
-const onStartGame = () => {
-  store.startGame()
-}
-const onResetGame = () => {
-  console.info('onResetGame')
-}
+const onStartGame = () => store.startGame()
+const onResetGame = () => store.resetGame()
 </script>
 
 <template>

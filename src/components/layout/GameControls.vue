@@ -2,37 +2,43 @@
 import GameDifficulty from '@/components/ui/GameDifficulty.vue'
 import RetroButton from '../slots/RetroButton.vue'
 import EmojiText from '@/components/slots/EmojiText.vue'
+import { useSudokuStore } from '@/stores/sudoku'
+const store = useSudokuStore()
+import { storeToRefs } from 'pinia'
+const { isPaused, hintsRemaining } = storeToRefs(store)
 
 const onTogglePause = () => {
-  console.info('onTogglePause')
+  store.togglePause()
 }
 const onHintClick = () => {
-  console.info('onHintClick')
+  store.useHint()
 }
 </script>
 <template>
   <div class="game-controls">
     <GameDifficulty />
     <RetroButton @click="onTogglePause">
-      <EmojiText>
+      <EmojiText v-if="isPaused">
+        <template #emoji>▶️</template>
+        <template #text>Resume</template>
+      </EmojiText>
+      <EmojiText v-else>
         <template #emoji>⏸</template>
-        <!-- <template #emoji>▶️</template> -->
         <template #text>Pause</template>
-        <!-- <template #text>Resume</template> -->
       </EmojiText>
     </RetroButton>
     <RetroButton @click="onHintClick">
       <EmojiText>
         <template #emoji>💡</template>
-        <template #text>Hint (10)</template>
+        <template #text>Hint ({{ hintsRemaining }})</template>
       </EmojiText>
     </RetroButton>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .game-controls {
-  border: 1px solid red;
+  // border: 1px solid red;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
