@@ -8,18 +8,21 @@ import ScoreRulesModal from '@/components/ui/ScoreRulesModal.vue'
 import GameControls from '@/components/layout/GameControls.vue'
 
 const store = useSudokuStore()
-const { isIntroShown } = storeToRefs(store)
+const { isIntro } = storeToRefs(store)
 
-onMounted(() => store.showIntro())
+onMounted(() => {
+  console.info('mounted animate!')
+  store.showIntro()
+})
 </script>
 
 <template>
   <main>
     <Transition name="slide" mode="out-in">
-      <section v-if="isIntroShown" class="intro-section">
+      <section v-if="isIntro" class="intro-section">
         <TheIntro />
       </section>
-      <section v-else-if="isIntroShown === false">
+      <section v-else-if="isIntro === false">
         <GameControls />
       </section>
     </Transition>

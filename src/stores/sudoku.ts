@@ -2,42 +2,55 @@ import { defineStore } from 'pinia'
 
 export const difficulties: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert']
 export type Difficulty = 'testing' | 'beginner' | 'intermediate' | 'hard' | 'expert'
+export type GameStatus = 'notStarted' | 'playing' | 'paused' | 'finished'
 
 interface SudokuState {
-  isIntroShown: null | boolean
+  gameStatus: GameStatus
+  isIntro: null | boolean
   isModalOpen: boolean
   difficulty: Difficulty
   difficulties: Difficulty[]
-  isGameInprogress: boolean
-  isPaused: boolean
   hintsRemaining: number
 }
 
 export const useSudokuStore = defineStore('sudoku', {
   state: (): SudokuState => ({
-    isIntroShown: null,
+    gameStatus: 'notStarted',
+    isIntro: null,
     isModalOpen: false,
     difficulty: 'beginner' as Difficulty,
     difficulties,
-    isGameInprogress: false,
-    isPaused: false,
     hintsRemaining: 10,
   }),
 
   getters: {
+    isGameOn(): boolean {
+      return this.gameStatus !== 'notStarted'
+    },
     canUseHint(): boolean {
       return this.hintsRemaining > 0
       // and selected cell is empty TODO:
     },
+    isGamePlaying(): boolean {
+      return this.gameStatus === 'playing'
+    },
+    isGamePaused(): boolean {
+      return this.gameStatus === 'paused'
+    },
   },
 
   actions: {
+    // game control
+    changeGameStatus(newStatus: GameStatus) {
+      console.info('changeGameStatus', newStatus)
+      this.gameStatus = newStatus
+    },
     // intro shown
     showIntro() {
-      this.isIntroShown = true
+      this.isIntro = true
     },
     hideIntro() {
-      this.isIntroShown = false
+      this.isIntro = false
     },
     // modal open
     toggleModal() {
@@ -49,9 +62,8 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     // start & reset game
     startGame() {
-      this.isGameInprogress = true
-      // this.isIntroShown = false;
       this.hideIntro()
+      this.changeGameStatus('playing')
     },
     resetGame() {
       console.info('reset!')
@@ -60,11 +72,15 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     //  pause game
     togglePause() {
-      this.isPaused = !this.isPaused
+      if (this.isGamePlaying) {
+        this.gameStatus = 'paused'
+      } else if (this.isGamePaused) {
+        this.gameStatus = 'playing'
+      }
     },
     // hints
     useHint() {
-      if (!this.canUseHint || this.isPaused) return
+      if (!this.canUseHint || !this.isGamePlaying) return
 
       this.hintsRemaining -= 1
       // give hint TODO:

@@ -5,7 +5,7 @@ import EmojiText from '@/components/slots/EmojiText.vue'
 import { useSudokuStore } from '@/stores/sudoku'
 const store = useSudokuStore()
 import { storeToRefs } from 'pinia'
-const { isPaused, hintsRemaining } = storeToRefs(store)
+const { isGamePaused, hintsRemaining } = storeToRefs(store)
 
 const onTogglePause = () => {
   store.togglePause()
@@ -18,7 +18,7 @@ const onHintClick = () => {
   <div class="game-controls">
     <GameDifficulty />
     <RetroButton @click="onTogglePause">
-      <EmojiText v-if="isPaused">
+      <EmojiText v-if="isGamePaused">
         <template #emoji>▶️</template>
         <template #text>Resume</template>
       </EmojiText>

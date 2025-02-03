@@ -16,8 +16,8 @@ const onResetGame = () => store.resetGame()
 <template>
   <div
     :class="{
-      'game-difficulty game-difficulty--during-game': store.isGameInprogress,
-      'game-difficulty game-difficulty--during-intro': !store.isGameInprogress,
+      'game-difficulty game-difficulty--during-game': store.isGameOn,
+      'game-difficulty game-difficulty--during-intro': !store.isGameOn,
     }"
   >
     <RetroSelect
@@ -25,11 +25,11 @@ const onResetGame = () => store.resetGame()
       :selected="store.difficulty"
       :options="store.difficulties"
       @change="onDifficultyChange"
-      :hideLabel="!store.isIntroShown"
+      :hideLabel="!store.isIntro"
     />
 
-    <span v-if="!store.isGameInprogress" for="difficulty">And start the game!</span>
-    <RetroButton v-if="!store.isGameInprogress" @click="onStartGame">Start</RetroButton>
+    <span v-if="!store.isGameOn" for="difficulty">And start the game!</span>
+    <RetroButton v-if="!store.isGameOn" @click="onStartGame">Start</RetroButton>
     <RetroButton v-else @click="onResetGame">
       <EmojiText>
         <template #text>Reset game</template>

@@ -3,17 +3,19 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 
 const store = useSudokuStore()
-const { isIntroShown, isModalOpen, difficulty, isGameInprogress, isPaused } = storeToRefs(store)
+const { isIntro, isModalOpen, difficulty, gameStatus, canUseHint, isGamePlaying } = storeToRefs(store)
 </script>
 <template>
   <h3 style="padding-top: 10%">The board</h3>
 
   <pre style="font-family: 'Courier New', Courier, monospace">
-isIntroShown: {{ isIntroShown }}
+isIntro: {{ isIntro }}
 isModalOpen: {{ isModalOpen }}
 difficulty: {{ difficulty }}
-isGameInprogress: {{ isGameInprogress }}
-isPaused: {{ isPaused }}
+gameStatus: {{ gameStatus }}
+---
+canUseHint {{ canUseHint }}
+isGamePlaying {{ isGamePlaying }}
   </pre>
 </template>
 
