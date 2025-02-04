@@ -1,11 +1,21 @@
-// export const difficulties: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert']
-// export type Difficulty = 'testing' | 'beginner' | 'intermediate' | 'hard' | 'expert'
+import { type Ref } from 'vue'
 
-// interface SudokuState {
-//   isIntroShown: null | boolean
-//   isModalOpen: boolean
-//   difficulty: Difficulty
-//   difficulties: Difficulty[]
-//   isGameInprogress: boolean
-//   // isGamePaused: boolean;
-// }
+export type Difficulty = 'testing' | 'beginner' | 'intermediate' | 'hard' | 'expert'
+export type GameStatus = 'notStarted' | 'playing' | 'paused' | 'finished'
+
+export interface DifficultyRange {
+  min: number
+  max: number
+}
+
+export interface SudokuState {
+  gameStatus: GameStatus
+  isIntro: null | boolean
+  isModalOpen: boolean
+  difficulty: Difficulty
+  difficulties: Difficulty[]
+  hintsRemaining: number
+  board: number[][]
+  gameTime: Ref<number, number>
+  // selectedCell: { row: number, col: number } | null
+}

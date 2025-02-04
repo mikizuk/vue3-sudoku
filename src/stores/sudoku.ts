@@ -1,21 +1,9 @@
-import { type Ref } from 'vue'
 import { useTimer } from '@/composables/useTimer'
 import { defineStore } from 'pinia'
+import type { Difficulty, GameStatus, SudokuState } from '@/types/sudokuTypes'
+import { DIFFICULTIES } from '@/constants/constants'
+import { useSudokuEngine } from '@/composables/useSudokuEngine'
 
-export const difficulties: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert']
-export type Difficulty = 'testing' | 'beginner' | 'intermediate' | 'hard' | 'expert'
-export type GameStatus = 'notStarted' | 'playing' | 'paused' | 'finished'
-
-interface SudokuState {
-  gameStatus: GameStatus
-  isIntro: null | boolean
-  isModalOpen: boolean
-  difficulty: Difficulty
-  difficulties: Difficulty[]
-  hintsRemaining: number
-  board: number[][]
-  gameTime: Ref<number, number>
-}
 const { elapsedTime, startTime, pauseTime, resetTime } = useTimer()
 
 export const useSudokuStore = defineStore('sudoku', {
@@ -24,12 +12,13 @@ export const useSudokuStore = defineStore('sudoku', {
     isIntro: null,
     isModalOpen: false,
     difficulty: 'beginner' as Difficulty,
-    difficulties,
+    difficulties: DIFFICULTIES,
     hintsRemaining: 10,
     board: Array(9)
       .fill(null)
       .map(() => Array(9).fill(0)),
     gameTime: elapsedTime,
+    // selectedCell: null
   }),
 
   getters: {
@@ -58,7 +47,7 @@ export const useSudokuStore = defineStore('sudoku', {
   actions: {
     // game control
     changeGameStatus(newStatus: GameStatus) {
-      console.info('changeGameStatus', newStatus)
+      console.info('--- changeGameStatus', newStatus)
       this.gameStatus = newStatus
     },
     // intro shown
@@ -76,30 +65,6 @@ export const useSudokuStore = defineStore('sudoku', {
     setDifficulty(level: Difficulty) {
       this.difficulty = level
     },
-    // game controls
-    startGame() {
-      this.hideIntro()
-      this.changeGameStatus('playing')
-      startTime()
-    },
-    resetGame() {
-      if (this.isGamePaused) return
-
-      this.resetHintsNumber()
-      this.changeGameStatus('playing')
-      resetTime()
-      // reset points TODO:
-      // create new game with selected difficulty TODO:
-    },
-    togglePause() {
-      if (this.isGamePlaying) {
-        this.gameStatus = 'paused'
-        pauseTime()
-      } else if (this.isGamePaused) {
-        this.gameStatus = 'playing'
-        startTime()
-      }
-    },
     // hints
     resetHintsNumber() {
       this.hintsRemaining = 10
@@ -112,6 +77,51 @@ export const useSudokuStore = defineStore('sudoku', {
       // add penalty TODO:
       // chnage score TODO:
       // fill the board TODO:
+    },
+    // game controls
+    togglePause() {
+      if (this.isGamePlaying) {
+        this.changeGameStatus('paused')
+        pauseTime()
+      } else if (this.isGamePaused) {
+        this.changeGameStatus('playing')
+        startTime()
+      }
+    },
+    startGame() {
+      console.info('START GAME!!')
+      this.hideIntro()
+      startTime()
+      this.generateNewGame(this.difficulty)
+    },
+    resetGame() {
+      if (this.isGamePaused) return
+
+      this.resetHintsNumber()
+      resetTime()
+      // reset points TODO:
+      this.generateNewGame(this.difficulty)
+    },
+
+    // game logic
+    generateNewGame(difficulty: Difficulty) {
+      console.info('--- generateNewGame on', difficulty)
+      this.changeGameStatus('playing')
+      this.createSolvedBoard()
+      this.createPlayableBoard()
+    },
+    // sudoku engine
+    createSolvedBoard(): number[][] {
+      console.info('createSolvedBoard', this.board)
+
+      const sudokuEngine = useSudokuEngine()
+      const solvedBoard = sudokuEngine.generateSolvedBoard(this.board)
+      console.info('solvedBoard', solvedBoard)
+
+      return []
+    },
+    createPlayableBoard(): number[][] {
+      return []
     },
   },
 })
