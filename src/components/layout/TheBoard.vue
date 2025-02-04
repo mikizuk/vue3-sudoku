@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 const store = useSudokuStore()
 
-const { board, isGamePaused, gameTime } = storeToRefs(store)
+const { solvedBoard, isGamePaused, gameTime } = storeToRefs(store)
 
 const onCellClick = (value: number) => {
   console.info('onCellClick', value, 'isGamePaused', isGamePaused.value)
 }
+onMounted(() => {
+  console.info('solvedBoard', solvedBoard.value)
+})
 </script>
 
 <template>
   <table class="board" :class="{ 'board--blurred': isGamePaused || gameTime === 0 }">
-    <tr class="board__row" v-for="(row, rowIndex) in board" :key="rowIndex">
+    <tr class="board__row" v-for="(row, rowIndex) in solvedBoard" :key="rowIndex">
       <td class="board__cell" v-for="(cell, cellIndex) in row" :key="cellIndex">
         <button class="board__button" @click="onCellClick(cell)">{{ cell }}</button>
         <!-- {{ cell }} -->
