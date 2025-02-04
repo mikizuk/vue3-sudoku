@@ -4,12 +4,19 @@ import { storeToRefs } from 'pinia'
 const store = useSudokuStore()
 
 const { board, isGamePaused } = storeToRefs(store)
+
+const onCellClick = (value: number) => {
+  console.info('onCellClick', value)
+}
 </script>
 
 <template>
   <table class="board" :class="{ 'board--paused': isGamePaused }">
     <tr class="board__row" v-for="(row, rowIndex) in board" :key="rowIndex">
-      <td class="board__cell" v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
+      <td class="board__cell" v-for="(cell, cellIndex) in row" :key="cellIndex">
+        <button class="board__button" @click="onCellClick(cell)">{{ cell }}</button>
+        <!-- {{ cell }} -->
+      </td>
     </tr>
   </table>
 </template>
@@ -34,6 +41,14 @@ const { board, isGamePaused } = storeToRefs(store)
     width: 30px;
     border: 1px solid;
     text-align: center;
+  }
+
+  .board__button {
+    background-color: inherit;
+    font-size: inherit;
+    border: 0;
+    height: 100%;
+    width: 100%;
   }
 
   .board__cell:nth-child(3n) {

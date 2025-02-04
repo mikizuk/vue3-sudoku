@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { useSudokuStore } from '@/stores/sudoku'
-const store = useSudokuStore()
 import EmojiText from '@/components/slots/EmojiText.vue'
+import { useSudokuStore } from '@/stores/sudoku'
+
+const store = useSudokuStore()
+
+const onToggleModal = () => {
+  store.toggleModal()
+}
 </script>
 
 <template>
@@ -13,7 +18,7 @@ import EmojiText from '@/components/slots/EmojiText.vue'
     <nav class="nav">
       <ul class="nav-list">
         <li class="nav-list__item">
-          <EmojiText @click="store.toggleModal()">
+          <EmojiText @click="onToggleModal">
             <template #emoji>🙋</template>
             <!-- <template #text>Scoring explained</template> -->
             <template #text>Scoring</template>
