@@ -3,15 +3,15 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 const store = useSudokuStore()
 
-const { board, isGamePaused } = storeToRefs(store)
+const { board, isGamePaused, gameTime } = storeToRefs(store)
 
 const onCellClick = (value: number) => {
-  console.info('onCellClick', value)
+  console.info('onCellClick', value, 'isGamePaused', isGamePaused.value)
 }
 </script>
 
 <template>
-  <table class="board" :class="{ 'board--paused': isGamePaused }">
+  <table class="board" :class="{ 'board--blurred': isGamePaused || gameTime === 0 }">
     <tr class="board__row" v-for="(row, rowIndex) in board" :key="rowIndex">
       <td class="board__cell" v-for="(cell, cellIndex) in row" :key="cellIndex">
         <button class="board__button" @click="onCellClick(cell)">{{ cell }}</button>
@@ -73,7 +73,7 @@ const onCellClick = (value: number) => {
   transition: all 0.4s ease-out;
 }
 
-.board--paused {
+.board--blurred {
   filter: blur(4px);
 }
 </style>

@@ -83,16 +83,18 @@ export const useSudokuStore = defineStore('sudoku', {
       startTime()
     },
     resetGame() {
-      // TODO: reset whole game! mind current difficulty, reset points
+      if (this.isGamePaused) return
+
+      this.resetHintsNumber()
       this.changeGameStatus('playing')
       resetTime()
-      this.resetHintsNumber()
+      // reset points TODO:
+      // create new game with selected difficulty TODO:
     },
     togglePause() {
       if (this.isGamePlaying) {
         this.gameStatus = 'paused'
         pauseTime()
-        // TODO: block all activity, digits, hints
       } else if (this.isGamePaused) {
         this.gameStatus = 'playing'
         startTime()

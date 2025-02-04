@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useSudokuStore } from '@/stores/sudoku'
+import { storeToRefs } from 'pinia'
+const store = useSudokuStore()
 
+const { isGamePaused } = storeToRefs(store)
 const digits: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const availableDigits = computed(() =>
@@ -10,7 +14,7 @@ const availableDigits = computed(() =>
 )
 
 const onDigit = (e: number) => {
-  console.info('e', e)
+  console.info('e', e, 'isGamePaused', isGamePaused.value)
 }
 </script>
 <template>

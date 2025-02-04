@@ -43,7 +43,6 @@ const onHintClick = () => {
 
 <style lang="scss" scoped>
 .controls {
-  // border: 1px solid red;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
