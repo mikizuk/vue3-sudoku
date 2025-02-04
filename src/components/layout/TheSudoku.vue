@@ -30,7 +30,8 @@ onMounted(() => {
         <TheResults />
         <TheBoard />
         <TheDigits />
-        <!-- <RecordsTable /> -->
+        <!-- <hr style="margin-block: 0.5rem" /> -->
+        <RecordsTable />
       </section>
     </Transition>
 
@@ -41,7 +42,7 @@ onMounted(() => {
 <style lang="scss">
 main {
   flex: 1;
-  padding-top: 20px;
+  padding-top: 5px;
   padding-inline: 8px;
   // border: 1px solid green;
 
@@ -68,8 +69,9 @@ main {
 .game-section {
   .controls,
   .results,
-  .board {
-    margin-block: 1rem;
+  .board,
+  .records {
+    margin-block: 0.6rem;
     // border: 1px solid red;
   }
 }
