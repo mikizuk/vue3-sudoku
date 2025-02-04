@@ -70,7 +70,7 @@ const { difficulties, difficulty } = storeToRefs(store)
   height: 100%;
   width: 100%;
   overflow-x: scroll;
-  scrollbar-color: #007 #bada55;
+  scrollbar-color: var(--teal-green) var(--crimson-red);
   scrollbar-width: thin;
 
   gap: 1rem;
@@ -80,7 +80,7 @@ const { difficulties, difficulty } = storeToRefs(store)
   scroll-snap-type: x mandatory;
 
   .records__table-item {
-    padding-bottom: 5px;
+    padding-bottom: 6px;
   }
 }
 
