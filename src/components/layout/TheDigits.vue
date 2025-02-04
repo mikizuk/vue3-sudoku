@@ -8,11 +8,15 @@ const availableDigits = computed(() =>
     return { value: digit, isAvailable: true }
   }),
 )
+
+const onDigit = (e: number) => {
+  console.info('e', e)
+}
 </script>
 <template>
   <ul class="digits">
     <li class="digits__item" v-for="digit in availableDigits" :key="digit.value">
-      <button>{{ digit.value }}</button>
+      <button class="digits__button" @click="onDigit(digit.value)">{{ digit.value }}</button>
     </li>
   </ul>
 </template>
@@ -29,14 +33,28 @@ const availableDigits = computed(() =>
     border-radius: 3px;
     /* padding: 4px; */
 
-    button {
-      /* color: var(--royal-blue); */
+    .digits__button {
       background-color: var(--white);
-      /* border: 1px solid red; */
       cursor: pointer;
       height: 30px;
       width: 30px;
     }
+    @media (hover: hover) {
+      .digits__button:hover {
+        outline: 2px solid var(--mint-green);
+        background-color: var(--teal-green);
+        color: var(--white);
+      }
+    }
+  }
+
+  .digits__item:active {
+    outline: 2px solid var(--royal-blue);
+  }
+
+  /* // remove later! */
+  .digits__item:last-of-type .digits__button {
+    background-color: var(--soft-gray);
   }
 }
 </style>

@@ -3,11 +3,11 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 const store = useSudokuStore()
 
-const { board } = storeToRefs(store)
+const { board, isGamePaused } = storeToRefs(store)
 </script>
 
 <template>
-  <table class="board">
+  <table class="board" :class="{ 'board--paused': isGamePaused }">
     <tr class="board__row" v-for="(row, rowIndex) in board" :key="rowIndex">
       <td class="board__cell" v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
     </tr>
@@ -55,5 +55,10 @@ const { board } = storeToRefs(store)
   .board__row:nth-of-type(1) > .board__cell:nth-of-type(4) {
     border: 2px solid var(--royal-blue);
   }
+  transition: all 0.4s ease-out;
+}
+
+.board--paused {
+  filter: blur(4px);
 }
 </style>

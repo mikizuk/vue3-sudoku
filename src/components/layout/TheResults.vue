@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useSudokuStore } from '@/stores/sudoku'
-const store = useSudokuStore()
 import { storeToRefs } from 'pinia'
+
+const store = useSudokuStore()
 const { formattedTime } = storeToRefs(store)
 </script>
 <template>

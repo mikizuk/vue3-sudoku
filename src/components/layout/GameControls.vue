@@ -3,8 +3,9 @@ import GameDifficulty from '@/components/ui/GameDifficulty.vue'
 import RetroButton from '../slots/RetroButton.vue'
 import EmojiText from '@/components/slots/EmojiText.vue'
 import { useSudokuStore } from '@/stores/sudoku'
-const store = useSudokuStore()
 import { storeToRefs } from 'pinia'
+
+const store = useSudokuStore()
 const { isGamePaused, hintsRemaining } = storeToRefs(store)
 
 const onTogglePause = () => {
@@ -13,9 +14,9 @@ const onTogglePause = () => {
 const onHintClick = () => {
   store.useHint()
 }
-const onEndGame = () => {
-  console.info('end game!')
-}
+// const onEndGame = () => {
+//   console.info('end game!')
+// }
 </script>
 <template>
   <div class="controls">
@@ -30,7 +31,7 @@ const onEndGame = () => {
         <template #text>Pause</template>
       </EmojiText>
     </RetroButton>
-    <RetroButton @click="onEndGame">End</RetroButton>
+    <!-- <RetroButton @click="onEndGame">End</RetroButton> -->
     <RetroButton @click="onHintClick">
       <EmojiText>
         <template #emoji>💡</template>

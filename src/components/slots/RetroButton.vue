@@ -13,4 +13,12 @@
   padding: 5px 10px;
   cursor: pointer;
 }
+.retro-button:active {
+  outline: 2px solid var(--royal-blue);
+}
+.retro-button:hover {
+  color: var(--golden-yellow);
+  background-color: var(--sky-blue);
+}
+
 </style>

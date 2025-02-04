@@ -92,6 +92,7 @@ export const useSudokuStore = defineStore('sudoku', {
       if (this.isGamePlaying) {
         this.gameStatus = 'paused'
         pauseTime()
+        // TODO: block all activity, digits, hints
       } else if (this.isGamePaused) {
         this.gameStatus = 'playing'
         startTime()
