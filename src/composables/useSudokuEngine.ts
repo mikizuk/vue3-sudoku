@@ -1,3 +1,5 @@
+import type { SudokuBoard } from '@/types/sudokuTypes'
+
 export function useSudokuEngine() {
   const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -5,7 +7,7 @@ export function useSudokuEngine() {
     return array.sort(() => Math.random() - 0.5)
   }
 
-  const isValidDigit = (board: number[][] | null[][], row: number, col: number, digit: number): boolean => {
+  const isValidDigit = (board: SudokuBoard, row: number, col: number, digit: number): boolean => {
     // check if the number (digit) already exists in this row
     for (let x = 0; x < 9; x++) {
       if (board[row][x] === digit) {
@@ -33,7 +35,7 @@ export function useSudokuEngine() {
     return true
   }
 
-  const solveSudoku = (board: number[][] | null[][]): boolean => {
+  const solveSudoku = (board: SudokuBoard): boolean => {
     let sudokuRow = 0
     let sudokuCol = 0
     let hasSudokuEmptyCells = false
@@ -88,7 +90,6 @@ export function useSudokuEngine() {
   }
 
   return {
-    // isValidCell,
     generateSolvedBoard,
   }
 }
