@@ -18,7 +18,7 @@ export const useSudokuStore = defineStore('sudoku', {
       .fill(null)
       .map(() => Array(9).fill(null)),
     gameTime: elapsedTime,
-    // selectedCell: null
+    selectedCell: null,
   }),
 
   getters: {
@@ -29,7 +29,6 @@ export const useSudokuStore = defineStore('sudoku', {
       return this.hintsRemaining > 0
       // and selected cell is empty TODO:
     },
-
     formattedTime(): string {
       const minutes = Math.floor(this.gameTime / 60)
       const seconds = this.gameTime % 60
@@ -88,20 +87,27 @@ export const useSudokuStore = defineStore('sudoku', {
         startTime()
       }
     },
+    // cell actions
+    setSelectedCell(row: number, col: number) {
+      if (this.isGamePaused) return
+
+      this.selectedCell = { row, col }
+      console.info(this.selectedCell)
+    },
     startGame() {
       console.info('START GAME!!')
       this.hideIntro()
-      startTime()
       this.generateNewGame(this.difficulty)
+      startTime()
     },
     resetGame() {
       if (this.isGamePaused) return
 
       console.info('RESET GAME!!')
       this.resetHintsNumber()
-      resetTime()
       // reset points TODO:
       this.generateNewGame(this.difficulty)
+      resetTime()
     },
     // game logic
     generateNewGame(difficulty: Difficulty) {

@@ -19,5 +19,5 @@ export interface SudokuState {
   hintsRemaining: number
   solvedBoard: SudokuBoard
   gameTime: Ref<number, number>
-  // selectedCell: { row: number, col: number } | null
+  selectedCell: { row: number; col: number } | null
 }
