@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import EmojiText from '@/components/slots/EmojiText.vue'
+
+const version: string = __APP_VERSION__
 </script>
 
 <template>
@@ -24,6 +26,8 @@ import EmojiText from '@/components/slots/EmojiText.vue'
         <template #text>Rules</template>
       </EmojiText>
     </a>
+    <span class="footer__separator">|</span>
+    <span class="app-version" title="App version">{{ version }}</span>
   </footer>
 </template>
 
@@ -36,6 +40,7 @@ import EmojiText from '@/components/slots/EmojiText.vue'
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   font-size: 0.5rem;
 
@@ -57,7 +62,7 @@ import EmojiText from '@/components/slots/EmojiText.vue'
   }
 }
 .footer__separator {
-  color: var(--mint-green);
+  color: var(--soft-gray);
   align-self: center;
 }
 
@@ -74,5 +79,9 @@ import EmojiText from '@/components/slots/EmojiText.vue'
 .footer__link:hover {
   color: var(--golden-yellow);
   box-shadow: inset 200px 0 0 0 var(--royal-blue);
+}
+
+.app-version {
+  color: var(--golden-yellow);
 }
 </style>
