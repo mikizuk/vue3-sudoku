@@ -6,11 +6,11 @@ const store = useSudokuStore()
 
 const { solvedBoard, isGamePaused, gameTime } = storeToRefs(store)
 
-const onCellClick = (value: number) => {
+const onCellClick = (value: number | null) => {
   console.info('onCellClick', value, 'isGamePaused', isGamePaused.value)
 }
 onMounted(() => {
-  console.info('solvedBoard', solvedBoard.value)
+  // console.info('?')
 })
 </script>
 

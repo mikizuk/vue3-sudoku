@@ -70,7 +70,7 @@ const { difficulties, difficulty } = storeToRefs(store)
   height: 100%;
   width: 100%;
   overflow-x: scroll;
-  scrollbar-color: var(--teal-green) var(--crimson-red);
+  scrollbar-color: var(--mint-green) var(--charcoal-gray);
   scrollbar-width: thin;
 
   gap: 1rem;
