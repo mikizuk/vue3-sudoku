@@ -92,26 +92,39 @@ export function useSudokuEngine() {
 
   // GENERATE PLAYABLE SUDOKU BOARD
 
-  const modifyBoardForPlay = (solvedBoard: SudokuBoard, difficulty: Difficulty): SudokuBoard => {
+  const modifyBoardForPlay = (
+    solvedBoard: SudokuBoard,
+    difficulty: Difficulty,
+  ): {
+    newBoard: SudokuBoard
+    originalBoard: SudokuBoard
+  } => {
     const { getRandomNumber } = useRandom()
     const range = DIFFICULTYRANGES[difficulty]
     const cellsToRemove = getRandomNumber(range.min, range.max)
-    console.info('generatePlayedBoard', difficulty, range, cellsToRemove, solvedBoard)
+    console.info('generatePlayBoard', difficulty, range, cellsToRemove, solvedBoard)
 
-    const boardForPlay = JSON.parse(JSON.stringify(solvedBoard))
+    const newBoard = JSON.parse(JSON.stringify(solvedBoard))
+    const originalBoard = Array(9)
+      .fill(null)
+      .map(() => Array(9).fill(true))
 
     let cellsRemoved = 0
     while (cellsRemoved < cellsToRemove) {
       const randomRowIndex = getRandomNumber(0, 8)
       const randomColIndex = getRandomNumber(0, 8)
 
-      if (boardForPlay[randomRowIndex][randomColIndex] !== null) {
-        boardForPlay[randomRowIndex][randomColIndex] = null
+      if (newBoard[randomRowIndex][randomColIndex] !== null) {
+        newBoard[randomRowIndex][randomColIndex] = null
+        originalBoard[randomRowIndex][randomColIndex] = false
         cellsRemoved++
       }
     }
 
-    return boardForPlay
+    return {
+      newBoard,
+      originalBoard,
+    }
   }
 
   return {

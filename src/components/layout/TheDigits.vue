@@ -14,7 +14,8 @@ const availableDigits = computed(() =>
 )
 
 const onDigit = (e: number) => {
-  console.info('e', e, 'isGamePaused', isGamePaused.value)
+  console.info('ondigit', e)
+  store.onDigitClick(e)
 }
 </script>
 <template>
@@ -40,8 +41,8 @@ const onDigit = (e: number) => {
     .digits__button {
       background-color: var(--white);
       cursor: pointer;
-      height: 30px;
-      width: 30px;
+      height: 34px;
+      width: 34px;
     }
     @media (hover: hover) {
       .digits__button:hover {

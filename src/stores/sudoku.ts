@@ -1,6 +1,6 @@
 import { useTimer } from '@/composables/useTimer'
 import { defineStore } from 'pinia'
-import type { Difficulty, GameStatus, SudokuState } from '@/types/sudokuTypes'
+import type { Cell, Difficulty, GameStatus, SudokuState } from '@/types/sudokuTypes'
 import { DIFFICULTIES } from '@/constants/constants'
 import { useSudokuEngine } from '@/composables/useSudokuEngine'
 
@@ -14,14 +14,17 @@ export const useSudokuStore = defineStore('sudoku', {
     difficulty: 'beginner' as Difficulty,
     difficulties: DIFFICULTIES,
     hintsRemaining: 10,
+    gameTime: elapsedTime,
     solvedBoard: Array(9)
       .fill(null)
       .map(() => Array(9).fill(null)),
-    gameTime: elapsedTime,
-    playedBoard: Array(9)
+    originalSolvedBoard: Array(9)
+      .fill(null)
+      .map(() => Array(9).fill(false)),
+    playBoard: Array(9)
       .fill(null)
       .map(() => Array(9).fill(null)),
-    selectedCell: null,
+    selectedCell: { row: null, col: null },
   }),
 
   getters: {
@@ -44,6 +47,9 @@ export const useSudokuStore = defineStore('sudoku', {
     isGamePaused(): boolean {
       return this.gameStatus === 'paused'
     },
+    // canSelectCell: (state) => {
+    //   return Boolean(state.selectedCell?.row && state.selectedCell?.col)
+    // },
   },
 
   actions: {
@@ -91,11 +97,27 @@ export const useSudokuStore = defineStore('sudoku', {
       }
     },
     // cell actions
-    setSelectedCell(row: number, col: number) {
-      if (this.isGamePaused) return
+    setSelectedCell(cell: Cell) {
+      console.info('selectedCell a', cell)
+      if (this.isGamePaused || cell.row === null || cell.col === null) return
 
-      this.selectedCell = { row, col }
-      console.info(this.selectedCell)
+      if (!this.originalSolvedBoard[cell.row][cell.col]) {
+        this.selectedCell = cell
+        console.info('selectedCell b', cell)
+      } else {
+        this.selectedCell = { row: null, col: null }
+      }
+    },
+    onDigitClick(digit: number | null) {
+      console.info('onDigitClick a', digit, this.selectedCell)
+      if (this.isGamePaused || this.selectedCell.row === null || this.selectedCell.col === null) return
+
+      const { row, col } = this.selectedCell
+      // const isCorrectGuess = digit === this.solvedBoard[row][col]
+      console.info('onDigitClick b', digit, 'correct', this.solvedBoard[row][col], digit === this.solvedBoard[row][col])
+      // if (isCorrectGuess) {
+      this.playBoard[row][col] = digit
+      // }
     },
     startGame() {
       console.info('START GAME!!')
@@ -108,6 +130,7 @@ export const useSudokuStore = defineStore('sudoku', {
 
       console.info('RESET GAME!!')
       this.resetHintsNumber()
+      this.setSelectedCell({ row: null, col: null })
       // reset points TODO:
       this.generateNewGame(this.difficulty)
       resetTime()
@@ -119,9 +142,12 @@ export const useSudokuStore = defineStore('sudoku', {
       this.changeGameStatus('playing')
       const sudokuEngine = useSudokuEngine()
       this.solvedBoard = sudokuEngine.generateSolvedBoard()
-      this.playedBoard = sudokuEngine.modifyBoardForPlay(this.solvedBoard, difficulty)
-      console.info('this.solvedBoard', this.solvedBoard)
-      console.info('this.playedBoard', this.playedBoard)
+      const { newBoard, originalBoard } = sudokuEngine.modifyBoardForPlay(this.solvedBoard, difficulty)
+      this.playBoard = newBoard
+      this.originalSolvedBoard = originalBoard
+      console.info('solvedBoard', this.solvedBoard)
+      console.info('playBoard', this.playBoard)
+      console.info('originalSolvedBoard', this.originalSolvedBoard)
     },
   },
 })

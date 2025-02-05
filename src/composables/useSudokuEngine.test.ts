@@ -122,7 +122,7 @@ describe('useSudokuEngine', () => {
 
       difficulties.forEach((difficulty) => {
         const solvedBoard = sudokuEngine.generateSolvedBoard()
-        const playBoard = sudokuEngine.modifyBoardForPlay(solvedBoard, difficulty)
+        const playBoard = sudokuEngine.modifyBoardForPlay(solvedBoard, difficulty).newBoard
 
         const nullCellCount = playBoard.reduce((total, row) => total + row.filter((cell) => cell === null).length, 0)
 

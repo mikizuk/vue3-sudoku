@@ -8,6 +8,11 @@ export interface DifficultyRange {
   max: number
 }
 
+export interface Cell {
+  row: number | null
+  col: number | null
+}
+
 export type SudokuBoard = number[][] | null[][]
 
 export interface SudokuState {
@@ -19,6 +24,7 @@ export interface SudokuState {
   hintsRemaining: number
   gameTime: Ref<number, number>
   solvedBoard: SudokuBoard
-  playedBoard: SudokuBoard
-  selectedCell: { row: number; col: number } | null
+  originalSolvedBoard: SudokuBoard
+  playBoard: SudokuBoard
+  selectedCell: Cell
 }

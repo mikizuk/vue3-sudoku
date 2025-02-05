@@ -69,11 +69,11 @@ describe('TheBoard', () => {
 
     // Click first cell (0,0)
     await wrapper.findAll('button.board__button')[0].trigger('click')
-    expect(setSelectedCellSpy).toHaveBeenCalledWith(0, 0)
+    expect(setSelectedCellSpy).toHaveBeenCalledWith({ col: 0, row: 0 })
 
     // Click cell at position (3,4)
     await wrapper.findAll('button.board__button')[31].trigger('click')
-    expect(setSelectedCellSpy).toHaveBeenCalledWith(3, 4)
+    expect(setSelectedCellSpy).toHaveBeenCalledWith({ col: 4, row: 3 })
   })
 
   it('applies selected class to the correct cell', async () => {
