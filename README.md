@@ -2,6 +2,8 @@
 
 A Sudoku game built with Vue 3 and Vite and Pinia. This project provides a simple and interactive Sudoku puzzle experience in the browser.
 
+**[Demo link](https://mickey-sudoku.netlify.app)**
+
 ## Features
 
 - Multiple difficulty levels
