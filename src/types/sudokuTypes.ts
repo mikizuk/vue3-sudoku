@@ -15,7 +15,7 @@ export interface SudokuState {
   difficulty: Difficulty
   difficulties: Difficulty[]
   hintsRemaining: number
-  solvedBoard: number[][]
+  solvedBoard: number[][] | null[][]
   gameTime: Ref<number, number>
   // selectedCell: { row: number, col: number } | null
 }

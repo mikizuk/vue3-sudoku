@@ -16,7 +16,7 @@ export const useSudokuStore = defineStore('sudoku', {
     hintsRemaining: 10,
     solvedBoard: Array(9)
       .fill(null)
-      .map(() => Array(9).fill(0)),
+      .map(() => Array(9).fill(null)),
     gameTime: elapsedTime,
     // selectedCell: null
   }),
@@ -97,37 +97,26 @@ export const useSudokuStore = defineStore('sudoku', {
     resetGame() {
       if (this.isGamePaused) return
 
-      console.info('resetGame!')
-      // this.resetBoard()
+      console.info('RESET GAME!!')
       this.resetHintsNumber()
       resetTime()
       // reset points TODO:
       this.generateNewGame(this.difficulty)
     },
-    // resetBoard() {
-    //   this.board = Array(9)
-    //     .fill(null)
-    //     .map(() => Array(9).fill(0))
-    //   console.info('this.board', this.board)
-    // },
     // game logic
     generateNewGame(difficulty: Difficulty) {
-      console.info('--- generateNewGame on', difficulty)
+      console.info('GENERATE BOARD !!', difficulty)
       this.changeGameStatus('playing')
       this.createSolvedBoard()
-      this.createPlayableBoard()
+      // this.createPlayableBoard()
     },
     // sudoku engine
-    createSolvedBoard(): number[][] {
-      console.info('solvedBoard a', this.solvedBoard)
+    createSolvedBoard() {
       const sudokuEngine = useSudokuEngine()
       this.solvedBoard = sudokuEngine.generateSolvedBoard()
-      console.info('solvedBoard b', this.solvedBoard)
-
-      return []
     },
-    createPlayableBoard(): number[][] {
-      return []
+    createPlayableBoard() {
+      console.info('CREATE PLAYER BOARD !!')
     },
   },
 })
