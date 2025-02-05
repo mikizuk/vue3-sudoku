@@ -1,11 +1,11 @@
-import type { SudokuBoard } from '@/types/sudokuTypes'
+import { DIFFICULTYRANGES } from '@/constants/constants'
+import type { Difficulty, SudokuBoard } from '@/types/sudokuTypes'
+import { useRandom } from '@/composables/useRandom'
 
 export function useSudokuEngine() {
   const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-  const shuffleArray = (array: number[]) => {
-    return array.sort(() => Math.random() - 0.5)
-  }
+  // GENERATE SOLVED SUDOKU BOARD
 
   const isValidDigit = (board: SudokuBoard, row: number, col: number, digit: number): boolean => {
     // check if the number (digit) already exists in this row
@@ -63,6 +63,7 @@ export function useSudokuEngine() {
     }
 
     // give to a cell (board[sudokuRow][sudokuCol]) a new random digit
+    const { shuffleArray } = useRandom()
     const randomDigits = shuffleArray(DIGITS)
 
     for (const digit of randomDigits) {
@@ -89,7 +90,32 @@ export function useSudokuEngine() {
     return board
   }
 
+  // GENERATE PLAYABLE SUDOKU BOARD
+
+  const modifyBoardForPlay = (solvedBoard: SudokuBoard, difficulty: Difficulty): SudokuBoard => {
+    const { getRandomNumber } = useRandom()
+    const range = DIFFICULTYRANGES[difficulty]
+    const cellsToRemove = getRandomNumber(range.min, range.max)
+    console.info('generatePlayedBoard', difficulty, range, cellsToRemove, solvedBoard)
+
+    const boardForPlay = JSON.parse(JSON.stringify(solvedBoard))
+
+    let cellsRemoved = 0
+    while (cellsRemoved < cellsToRemove) {
+      const randomRowIndex = getRandomNumber(0, 8)
+      const randomColIndex = getRandomNumber(0, 8)
+
+      if (boardForPlay[randomRowIndex][randomColIndex] !== null) {
+        boardForPlay[randomRowIndex][randomColIndex] = null
+        cellsRemoved++
+      }
+    }
+
+    return boardForPlay
+  }
+
   return {
     generateSolvedBoard,
+    modifyBoardForPlay,
   }
 }

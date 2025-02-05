@@ -18,6 +18,9 @@ export const useSudokuStore = defineStore('sudoku', {
       .fill(null)
       .map(() => Array(9).fill(null)),
     gameTime: elapsedTime,
+    playedBoard: Array(9)
+      .fill(null)
+      .map(() => Array(9).fill(null)),
     selectedCell: null,
   }),
 
@@ -96,8 +99,8 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     startGame() {
       console.info('START GAME!!')
-      this.hideIntro()
       this.generateNewGame(this.difficulty)
+      this.hideIntro()
       startTime()
     },
     resetGame() {
@@ -110,19 +113,15 @@ export const useSudokuStore = defineStore('sudoku', {
       resetTime()
     },
     // game logic
+    // sudoku engine
     generateNewGame(difficulty: Difficulty) {
       console.info('GENERATE BOARD !!', difficulty)
       this.changeGameStatus('playing')
-      this.createSolvedBoard()
-      // this.createPlayableBoard()
-    },
-    // sudoku engine
-    createSolvedBoard() {
       const sudokuEngine = useSudokuEngine()
       this.solvedBoard = sudokuEngine.generateSolvedBoard()
-    },
-    createPlayableBoard() {
-      console.info('CREATE PLAYER BOARD !!')
+      this.playedBoard = sudokuEngine.modifyBoardForPlay(this.solvedBoard, difficulty)
+      console.info('this.solvedBoard', this.solvedBoard)
+      console.info('this.playedBoard', this.playedBoard)
     },
   },
 })

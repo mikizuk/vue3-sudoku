@@ -46,15 +46,6 @@ describe('TheBoard', () => {
     expect(wrapper.findAll('button.board__button')).toHaveLength(81)
   })
 
-  it('displays correct digits from the solved board', () => {
-    const buttons = wrapper.findAll('button.board__button')
-
-    const firstRowExpected = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    firstRowExpected.forEach((digit, index) => {
-      expect(buttons[index].text()).toBe(digit.toString())
-    })
-  })
-
   it('applies blur class when game is paused', async () => {
     expect(wrapper.find('table.board').classes()).not.toContain('board--blurred')
 

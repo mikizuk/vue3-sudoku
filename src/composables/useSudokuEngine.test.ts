@@ -1,5 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { useSudokuEngine } from './useSudokuEngine'
+import type { Difficulty } from '@/types/sudokuTypes'
+import { DIFFICULTYRANGES } from '@/constants/constants'
 
 describe('useSudokuEngine', () => {
   let sudokuEngine: ReturnType<typeof useSudokuEngine>
@@ -112,5 +114,35 @@ describe('useSudokuEngine', () => {
         }
       }
     })
+  })
+
+  describe('getRandomNumber', () => {
+    it('removes varying number of cells based on difficulty', () => {
+      const difficulties: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert']
+
+      difficulties.forEach((difficulty) => {
+        const solvedBoard = sudokuEngine.generateSolvedBoard()
+        const playBoard = sudokuEngine.modifyBoardForPlay(solvedBoard, difficulty)
+
+        const nullCellCount = playBoard.reduce((total, row) => total + row.filter((cell) => cell === null).length, 0)
+
+        const range = DIFFICULTYRANGES[difficulty]
+        expect(nullCellCount).toBeGreaterThanOrEqual(range.min)
+        expect(nullCellCount).toBeLessThanOrEqual(range.max)
+      })
+    })
+  })
+  it('generates different boards across multiple calls', () => {
+    const boardSet = new Set()
+    const iterations = 50
+
+    for (let i = 0; i < iterations; i++) {
+      const board = sudokuEngine.generateSolvedBoard()
+      const boardString = JSON.stringify(board)
+      boardSet.add(boardString)
+    }
+
+    // Ensure good randomness with minimal repeated boards
+    expect(boardSet.size).toBeGreaterThan(iterations * 0.9)
   })
 })

@@ -3,7 +3,7 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 const store = useSudokuStore()
 
-const { solvedBoard, isGamePaused, gameTime, selectedCell } = storeToRefs(store)
+const { playedBoard, isGamePaused, gameTime, selectedCell } = storeToRefs(store)
 
 const onCellClick = (row: number, col: number): void => {
   store.setSelectedCell(row, col)
@@ -12,7 +12,7 @@ const onCellClick = (row: number, col: number): void => {
 
 <template>
   <table class="board" :class="{ 'board--blurred': isGamePaused || gameTime === 0 }">
-    <tr class="board__row" v-for="(row, rowIndex) in solvedBoard" :key="rowIndex">
+    <tr class="board__row" v-for="(row, rowIndex) in playedBoard" :key="rowIndex">
       <td class="board__cell" v-for="(digit, cellIndex) in row" :key="cellIndex">
         <button
           class="board__button"
@@ -42,6 +42,7 @@ const onCellClick = (row: number, col: number): void => {
     text-align: center;
   }
   .board__cell {
+    /* aspect-ratio: 1/1; */
     height: 30px;
     width: 30px;
     border: 1px solid;
