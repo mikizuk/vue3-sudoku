@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
-import type { SudokuBoard } from '@/types/sudokuTypes'
 const store = useSudokuStore()
 
 const { solvedBoard, originalSolvedBoard, playBoard, isGamePaused, gameTime, selectedCell } = storeToRefs(store) // canSelectCell
@@ -11,27 +10,16 @@ const onCellClick = (row: number, col: number): void => {
   store.setSelectedCell({ row, col })
 }
 
-const isSelected = (row: number, col: number): boolean => {
-  return row === selectedCell.value.row && col === selectedCell.value.col
-}
-
-const isCorrectCell = (row: number, col: number): boolean => {
-  const play = playBoard.value as SudokuBoard
-  const solved = solvedBoard.value as SudokuBoard
-  const original = originalSolvedBoard.value as SudokuBoard
-
-  return play[row][col] === solved[row][col] && !original[row][col]
-}
-const isErrorCell = (row: number, col: number): boolean => {
-  const play = playBoard.value as SudokuBoard
-  const solved = solvedBoard.value as SudokuBoard
-  const original = originalSolvedBoard.value as SudokuBoard
-  return play[row][col] !== null && play[row][col] !== solved[row][col] && !original[row][col]
-}
-const isOriginalCell = (row: number, col: number): boolean => {
-  const original = originalSolvedBoard.value as SudokuBoard
-  return !!original[row][col]
-}
+const getCellClasses = computed(() => (row: number, col: number) => ({
+  'board__cell--selected': row === selectedCell.value.row && col === selectedCell.value.col,
+  'board__cell--correct':
+    playBoard.value[row][col] === solvedBoard.value[row][col] && !originalSolvedBoard.value[row][col],
+  'board__cell--error':
+    playBoard.value[row][col] !== null &&
+    playBoard.value[row][col] !== solvedBoard.value[row][col] &&
+    !originalSolvedBoard.value[row][col],
+  'board__cell--original': !!originalSolvedBoard.value[row][col],
+}))
 
 const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0)
 </script>
@@ -43,12 +31,7 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
         <button
           class="board__button"
           @click="onCellClick(rowIndex, cellIndex)"
-          :class="{
-            'board__cell--selected': isSelected(rowIndex, cellIndex),
-            'board__cell--correct': isCorrectCell(rowIndex, cellIndex),
-            'board__cell--error': isErrorCell(rowIndex, cellIndex),
-            'board__cell--original': isOriginalCell(rowIndex, cellIndex),
-          }"
+          :class="getCellClasses(rowIndex, cellIndex)"
         >
           {{ digit }}
         </button>
