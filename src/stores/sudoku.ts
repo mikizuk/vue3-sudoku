@@ -47,9 +47,6 @@ export const useSudokuStore = defineStore('sudoku', {
     isGamePaused(): boolean {
       return this.gameStatus === 'paused'
     },
-    // canSelectCell: (state) => {
-    //   return Boolean(state.selectedCell?.row && state.selectedCell?.col)
-    // },
   },
 
   actions: {
@@ -98,23 +95,23 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     // cell actions
     setSelectedCell(cell: Cell) {
-      console.info('selectedCell a', cell)
+      // console.info('selectedCell a', cell)
       if (this.isGamePaused || cell.row === null || cell.col === null) return
 
       if (!this.originalSolvedBoard[cell.row][cell.col]) {
         this.selectedCell = cell
-        console.info('selectedCell b', cell)
+        // console.info('selectedCell b', cell)
       } else {
         this.selectedCell = { row: null, col: null }
       }
     },
     onDigitClick(digit: number | null) {
-      console.info('onDigitClick a', digit, this.selectedCell)
+      // console.info('onDigitClick a', digit, this.selectedCell)
       if (this.isGamePaused || this.selectedCell.row === null || this.selectedCell.col === null) return
 
       const { row, col } = this.selectedCell
       // const isCorrectGuess = digit === this.solvedBoard[row][col]
-      console.info('onDigitClick b', digit, 'correct', this.solvedBoard[row][col], digit === this.solvedBoard[row][col])
+      // console.info('onDigitClick b', digit, 'correct', this.solvedBoard[row][col], digit === this.solvedBoard[row][col])
       // if (isCorrectGuess) {
       this.playBoard[row][col] = digit
       // }

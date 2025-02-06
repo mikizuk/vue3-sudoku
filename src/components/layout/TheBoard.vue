@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
+import type { SudokuBoard } from '@/types/sudokuTypes'
 const store = useSudokuStore()
 
 const { solvedBoard, originalSolvedBoard, playBoard, isGamePaused, gameTime, selectedCell } = storeToRefs(store) // canSelectCell
@@ -8,25 +10,44 @@ const { solvedBoard, originalSolvedBoard, playBoard, isGamePaused, gameTime, sel
 const onCellClick = (row: number, col: number): void => {
   store.setSelectedCell({ row, col })
 }
+
+const isSelected = (row: number, col: number): boolean => {
+  return row === selectedCell.value.row && col === selectedCell.value.col
+}
+
+const isCorrectCell = (row: number, col: number): boolean => {
+  const play = playBoard.value as SudokuBoard
+  const solved = solvedBoard.value as SudokuBoard
+  const original = originalSolvedBoard.value as SudokuBoard
+
+  return play[row][col] === solved[row][col] && !original[row][col]
+}
+const isErrorCell = (row: number, col: number): boolean => {
+  const play = playBoard.value as SudokuBoard
+  const solved = solvedBoard.value as SudokuBoard
+  const original = originalSolvedBoard.value as SudokuBoard
+  return play[row][col] !== null && play[row][col] !== solved[row][col] && !original[row][col]
+}
+const isOriginalCell = (row: number, col: number): boolean => {
+  const original = originalSolvedBoard.value as SudokuBoard
+  return !!original[row][col]
+}
+
+const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0)
 </script>
 
 <template>
-  <table class="board" :class="{ 'board--blurred': isGamePaused || gameTime === 0 }">
+  <table class="board" :class="{ 'board--blurred': isBoardBlurred }">
     <tr class="board__row" v-for="(row, rowIndex) in playBoard" :key="rowIndex">
       <td class="board__cell" v-for="(digit, cellIndex) in row" :key="cellIndex">
         <button
           class="board__button"
           @click="onCellClick(rowIndex, cellIndex)"
           :class="{
-            'board__cell--selected': rowIndex === selectedCell?.row && cellIndex === selectedCell?.col,
-            'board__cell--correct':
-              playBoard[rowIndex][cellIndex] === solvedBoard[rowIndex][cellIndex] &&
-              !originalSolvedBoard[rowIndex][cellIndex],
-            'board__cell--error':
-              playBoard[rowIndex][cellIndex] !== null &&
-              playBoard[rowIndex][cellIndex] !== solvedBoard[rowIndex][cellIndex] &&
-              !originalSolvedBoard[rowIndex][cellIndex],
-            'board__cell--original': originalSolvedBoard[rowIndex][cellIndex],
+            'board__cell--selected': isSelected(rowIndex, cellIndex),
+            'board__cell--correct': isCorrectCell(rowIndex, cellIndex),
+            'board__cell--error': isErrorCell(rowIndex, cellIndex),
+            'board__cell--original': isOriginalCell(rowIndex, cellIndex),
           }"
         >
           {{ digit }}

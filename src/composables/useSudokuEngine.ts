@@ -102,7 +102,7 @@ export function useSudokuEngine() {
     const { getRandomNumber } = useRandom()
     const range = DIFFICULTYRANGES[difficulty]
     const cellsToRemove = getRandomNumber(range.min, range.max)
-    console.info('generatePlayBoard', difficulty, range, cellsToRemove, solvedBoard)
+    // console.info('generatePlayBoard', difficulty, range, cellsToRemove, solvedBoard)
 
     const newBoard = JSON.parse(JSON.stringify(solvedBoard))
     const originalBoard = Array(9)
