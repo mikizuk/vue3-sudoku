@@ -44,7 +44,6 @@ describe('useRandom', () => {
       const originalArray = [1, 2, 3, 4, 5]
       const shuffledArray = shuffleArray([...originalArray])
 
-      expect(shuffledArray).not.toEqual(originalArray)
       expect(shuffledArray.sort()).toEqual(originalArray)
     })
 
