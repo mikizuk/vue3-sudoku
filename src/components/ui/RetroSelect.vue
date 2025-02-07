@@ -1,4 +1,7 @@
 <script setup lang="ts" generic="T">
+import { useCapitalize } from '@/composables/useCapitalize'
+const { capitalize } = useCapitalize()
+
 defineProps<{
   label: string
   selected: T
@@ -18,7 +21,7 @@ const onSelect = (event: Event) => {
   <label v-if="!hideLabel" :for="`select-${label}`">Set difficulty:</label>
   <select :aria-label="`${label}:`" class="retro-select" :id="`select-${label}`" :value="selected" @change="onSelect">
     <option class="retro-select__option" v-for="option in options" :key="String(option)" :value="option">
-      {{ String(option).charAt(0).toUpperCase() + String(option).slice(1) }}
+      {{ capitalize(option) }}
     </option>
   </select>
 </template>
