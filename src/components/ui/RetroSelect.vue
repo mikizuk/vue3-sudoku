@@ -21,7 +21,7 @@ const onSelect = (event: Event) => {
   <label v-if="!hideLabel" :for="`select-${label}`">Set difficulty:</label>
   <select :aria-label="`${label}:`" class="retro-select" :id="`select-${label}`" :value="selected" @change="onSelect">
     <option class="retro-select__option" v-for="option in options" :key="String(option)" :value="option">
-      {{ capitalize(option) }}
+      {{ capitalize(option as string) }}
     </option>
   </select>
 </template>

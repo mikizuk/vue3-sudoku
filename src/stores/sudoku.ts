@@ -152,9 +152,9 @@ export const useSudokuStore = defineStore('sudoku', {
       const { newBoard, originalBoard } = sudokuEngine.modifyBoardForPlay(this.solvedBoard, difficulty)
       this.playBoard = newBoard
       this.originalSolvedBoard = originalBoard
-      console.info('solvedBoard', this.solvedBoard)
-      console.info('playBoard', this.playBoard)
-      console.info('originalSolvedBoard', this.originalSolvedBoard)
+      // console.info('solvedBoard', this.solvedBoard)
+      // console.info('playBoard', this.playBoard)
+      // console.info('originalSolvedBoard', this.originalSolvedBoard)
     },
   },
 })

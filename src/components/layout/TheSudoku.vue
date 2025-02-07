@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import TheIntro from '@/components/layout/TheIntro.vue'
 import ScoreRulesModal from '@/components/ui/ScoreRulesModal.vue'
 import GameControls from '@/components/layout/GameControls.vue'
-import TheResults from '@/components/layout/TheResults.vue'
+import GameInfo from '@/components/layout/GameInfo.vue'
 import TheBoard from '@/components/layout/TheBoard.vue'
 import TheDigits from '@/components/layout/TheDigits.vue'
 import RecordsTable from '@/components/layout/RecordsTable.vue'
@@ -31,7 +31,7 @@ onUnmounted(() => {
       </section>
       <section v-else-if="isIntro === false" class="game-section">
         <GameControls />
-        <TheResults />
+        <GameInfo />
         <TheBoard />
         <TheDigits />
         <!-- <hr style="margin-block: 0.5rem" /> -->

@@ -32,7 +32,7 @@ const onHintClick = () => {
       </EmojiText>
     </RetroButton>
     <!-- <RetroButton @click="onEndGame">End</RetroButton> -->
-    <RetroButton @click="onHintClick">
+    <RetroButton @click="onHintClick" :disabled="isGamePaused">
       <EmojiText>
         <template #emoji>💡</template>
         <template #text>Hint ({{ hintsRemaining }})</template>

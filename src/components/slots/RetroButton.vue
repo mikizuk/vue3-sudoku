@@ -13,6 +13,11 @@
   padding: 5px 10px;
   cursor: pointer;
 }
+.retro-button:disabled {
+  color: var(--soft-gray);
+  background-color: var(--light-gray);
+  border: 2px solid transparent;
+}
 .retro-button:active {
   outline: 2px solid var(--royal-blue);
 }

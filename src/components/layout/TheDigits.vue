@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
-// import { storeToRefs } from 'pinia'
+import { storeToRefs } from 'pinia'
 const store = useSudokuStore()
 
-// const { isGamePaused } = storeToRefs(store)
+const { isGamePaused } = storeToRefs(store)
 const digits: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const availableDigits = computed(() =>
@@ -12,6 +12,8 @@ const availableDigits = computed(() =>
     return { value: digit, isAvailable: true }
   }),
 )
+
+const isButtonDisabled = computed(() => isGamePaused.value) // && all digits solved on playBoard
 
 const onDigit = (e: number) => {
   // console.info('ondigit', e)
@@ -21,7 +23,9 @@ const onDigit = (e: number) => {
 <template>
   <ul class="digits">
     <li class="digits__item" v-for="digit in availableDigits" :key="digit.value">
-      <button class="digits__button" @click="onDigit(digit.value)">{{ digit.value }}</button>
+      <button class="digits__button" @click="onDigit(digit.value)" :disabled="isButtonDisabled">
+        {{ digit.value }}
+      </button>
     </li>
   </ul>
 </template>
@@ -37,30 +41,29 @@ const onDigit = (e: number) => {
     border: 2px solid var(--charcoal-gray);
     border-radius: 3px;
     /* padding: 4px; */
-
-    .digits__button {
-      background-color: var(--white);
-      cursor: pointer;
-      height: 34px;
-      width: 34px;
-    }
-    @media (hover: hover) {
-      .digits__button:hover {
-        outline: 2px solid var(--mint-green);
-        background-color: var(--teal-green);
-        color: var(--white);
-      }
-    }
   }
 
   .digits__item:active {
     outline: 2px solid var(--royal-blue);
   }
 
-  /* // remove later! */
-  /* .digits__item:last-of-type .digits__button {
-    background-color: var(--soft-gray);
-  } */
-  /* // remove later! */
+  .digits__button {
+    background-color: var(--white);
+    cursor: pointer;
+    height: 34px;
+    width: 34px;
+  }
+
+  .digits__item .digits__button:disabled {
+    background-color: var(--light-gray);
+  }
+
+  @media (hover: hover) {
+    .digits__button:hover {
+      outline: 2px solid var(--mint-green);
+      background-color: var(--teal-green);
+      color: var(--white);
+    }
+  }
 }
 </style>
