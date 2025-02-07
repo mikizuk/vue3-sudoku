@@ -28,4 +28,5 @@ export interface SudokuState {
   originalSolvedBoard: SudokuBoard
   playBoard: SudokuBoard
   selectedCell: Cell
+  gameScore: number
 }

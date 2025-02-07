@@ -1,4 +1,4 @@
-import { DIFFICULTYRANGES } from '@/constants/constants'
+import { DIFFICULTY_RANGES } from '@/constants/constants'
 import type { Difficulty, SudokuBoard } from '@/types/sudokuTypes'
 import { useRandom } from '@/composables/useRandom'
 
@@ -100,7 +100,7 @@ export function useSudokuEngine() {
     originalBoard: SudokuBoard
   } => {
     const { getRandomNumber } = useRandom()
-    const range = DIFFICULTYRANGES[difficulty]
+    const range = DIFFICULTY_RANGES[difficulty]
     const cellsToRemove = getRandomNumber(range.min, range.max)
     // console.info('generatePlayBoard', difficulty, range, cellsToRemove, solvedBoard)
 

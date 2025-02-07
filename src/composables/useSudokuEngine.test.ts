@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { useSudokuEngine } from './useSudokuEngine'
 import type { Difficulty } from '@/types/sudokuTypes'
-import { DIFFICULTYRANGES } from '@/constants/constants'
+import { DIFFICULTY_RANGES } from '@/constants/constants'
 
 describe('useSudokuEngine', () => {
   let sudokuEngine: ReturnType<typeof useSudokuEngine>
@@ -126,7 +126,7 @@ describe('useSudokuEngine', () => {
 
         const nullCellCount = playBoard.reduce((total, row) => total + row.filter((cell) => cell === null).length, 0)
 
-        const range = DIFFICULTYRANGES[difficulty]
+        const range = DIFFICULTY_RANGES[difficulty]
         expect(nullCellCount).toBeGreaterThanOrEqual(range.min)
         expect(nullCellCount).toBeLessThanOrEqual(range.max)
       })

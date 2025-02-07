@@ -1,8 +1,9 @@
 import { useTimer } from '@/composables/useTimer'
 import { defineStore } from 'pinia'
 import type { Cell, Difficulty, GameStatus, SudokuState } from '@/types/sudokuTypes'
-import { DIFFICULTIES } from '@/constants/constants'
+import { DIFFICULTIES, INITIAL_HINT_REMAINING } from '@/constants/constants'
 import { useSudokuEngine } from '@/composables/useSudokuEngine'
+import { useScoreSystem } from '@/composables/useScoreSystem'
 
 const { elapsedTime, startTime, pauseTime, resetTime } = useTimer()
 
@@ -14,7 +15,7 @@ export const useSudokuStore = defineStore('sudoku', {
     selectedDifficulty: 'beginner' as Difficulty,
     actualGameDifficulty: 'beginner' as Difficulty,
     difficulties: DIFFICULTIES,
-    hintsRemaining: 10,
+    hintsRemaining: INITIAL_HINT_REMAINING,
     gameTime: elapsedTime,
     solvedBoard: Array(9)
       .fill(null)
@@ -26,6 +27,7 @@ export const useSudokuStore = defineStore('sudoku', {
       .fill(null)
       .map(() => Array(9).fill(null)),
     selectedCell: { row: null, col: null },
+    gameScore: 0,
   }),
 
   getters: {
@@ -77,16 +79,7 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     // hints
     resetHintsNumber() {
-      this.hintsRemaining = 10
-    },
-    useHint() {
-      if (!this.canUseHint || !this.isGamePlaying) return
-
-      this.hintsRemaining -= 1
-      // give hint TODO:
-      // add penalty TODO:
-      // chnage score TODO:
-      // fill the board TODO:
+      this.hintsRemaining = INITIAL_HINT_REMAINING
     },
     // game controls
     togglePause() {
@@ -113,18 +106,6 @@ export const useSudokuStore = defineStore('sudoku', {
     clearSelectedCell() {
       this.selectedCell = { row: null, col: null }
     },
-    // digit actions
-    onDigitClick(digit: number | null) {
-      // console.info('onDigitClick a', digit, this.selectedCell)
-      if (this.isGamePaused || this.selectedCell.row === null || this.selectedCell.col === null) return
-
-      const { row, col } = this.selectedCell
-      // const isCorrectGuess = digit === this.solvedBoard[row][col]
-      // console.info('onDigitClick b', digit, 'correct', this.solvedBoard[row][col], digit === this.solvedBoard[row][col])
-      // if (isCorrectGuess) {
-      this.playBoard[row][col] = digit
-      // }
-    },
     startGame() {
       console.info('START GAME!!')
       this.generateNewGame(this.selectedDifficulty)
@@ -141,8 +122,7 @@ export const useSudokuStore = defineStore('sudoku', {
       this.generateNewGame(this.selectedDifficulty)
       resetTime()
     },
-    // game logic
-    // sudoku engine
+    // game logic | sudoku engine
     generateNewGame(difficulty: Difficulty) {
       this.setActualGameDifficulty(difficulty)
       console.info('GENERATE BOARD !!', difficulty)
@@ -155,6 +135,32 @@ export const useSudokuStore = defineStore('sudoku', {
       // console.info('solvedBoard', this.solvedBoard)
       // console.info('playBoard', this.playBoard)
       // console.info('originalSolvedBoard', this.originalSolvedBoard)
+    },
+    // user actions
+    useHint() {
+      if (!this.canUseHint || !this.isGamePlaying) return
+
+      this.hintsRemaining -= 1
+      console.info('useHint this.hintsRemaining', this.hintsRemaining)
+      this.updateScore(null, true)
+    },
+    onDigitClick(digit: number | null) {
+      console.info('onDigitClick digit', digit, 'selectedCell', this.selectedCell)
+      if (this.isGamePaused || this.selectedCell.row === null || this.selectedCell.col === null) return
+
+      const { row, col } = this.selectedCell
+      const isGuessCorrect = digit === this.solvedBoard[row][col]
+      this.playBoard[row][col] = digit
+      this.updateScore(isGuessCorrect)
+    },
+    // score system
+    updateScore(isGuessCorrect: boolean | null, usedHint = false) {
+      // give hint TODO:
+      // add penalty TODO:
+      // chnage score TODO:
+      // fill the board TODO:
+      const { actualScore } = useScoreSystem(this.gameScore)
+      console.info('updateScore', isGuessCorrect, usedHint, actualScore)
     },
   },
 })
