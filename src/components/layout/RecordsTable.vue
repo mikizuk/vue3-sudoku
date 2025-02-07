@@ -7,11 +7,11 @@ const { difficulties } = storeToRefs(store)
 </script>
 <template>
   <div class="records">
-    <h5 class="records__title">Records</h5>
+    <h4 class="records__title">Records</h4>
     <ul class="records__table-list">
       <li class="records__table-item" v-for="difficulty in difficulties" :key="difficulty">
         <table class="table">
-          <caption class="table__caption">
+          <caption :class="`table__caption color--${difficulty}`">
             {{
               difficulty
             }}
@@ -83,21 +83,21 @@ const { difficulties } = storeToRefs(store)
   }
 }
 
-.records__table-item:nth-of-type(1) .table__caption {
-  color: var(--mint-green);
-}
-.records__table-item:nth-of-type(2) .table__caption {
-  color: var(--teal-green);
-}
-.records__table-item:nth-of-type(3) .table__caption {
-  color: var(--royal-blue);
-}
-.records__table-item:nth-of-type(4) .table__caption {
-  color: var(--golden-yellow);
-}
-.records__table-item:nth-of-type(5) .table__caption {
-  color: var(--crimson-red);
-}
+// .records__table-item:nth-of-type(1) .table__caption {
+//   color: var(--mint-green);
+// }
+// .records__table-item:nth-of-type(2) .table__caption {
+//   color: var(--teal-green);
+// }
+// .records__table-item:nth-of-type(3) .table__caption {
+//   color: var(--royal-blue);
+// }
+// .records__table-item:nth-of-type(4) .table__caption {
+//   color: var(--golden-yellow);
+// }
+// .records__table-item:nth-of-type(5) .table__caption {
+//   color: var(--crimson-red);
+// }
 
 .table {
   margin-top: 0.5rem;

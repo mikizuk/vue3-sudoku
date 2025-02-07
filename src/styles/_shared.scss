@@ -76,4 +76,20 @@
   @media (min-width: 1280px) {
     // font-size: 1.4rem;
   }
+
+  .color--testing {
+    color: var(--mint-green);
+  }
+  .color--beginner {
+    color: var(--teal-green);
+  }
+  .color--intermediate {
+    color: var(--royal-blue);
+  }
+  .color--hard {
+    color: var(--golden-yellow);
+  }
+  .color--expert {
+    color: var(--crimson-red);
+  }
 }
