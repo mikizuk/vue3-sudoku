@@ -45,5 +45,6 @@ export function useTimer() {
     startTime,
     pauseTime,
     resetTime,
+    stopTime,
   }
 }

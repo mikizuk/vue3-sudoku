@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 import TheIntro from '@/components/layout/TheIntro.vue'
@@ -9,13 +9,17 @@ import TheResults from '@/components/layout/TheResults.vue'
 import TheBoard from '@/components/layout/TheBoard.vue'
 import TheDigits from '@/components/layout/TheDigits.vue'
 import RecordsTable from '@/components/layout/RecordsTable.vue'
+import { useTimer } from '@/composables/useTimer'
 
 const store = useSudokuStore()
 const { isIntro } = storeToRefs(store)
+const { stopTime } = useTimer()
 
 onMounted(() => {
-  // console.info('mounted animate!')
   store.showIntro()
+})
+onUnmounted(() => {
+  stopTime()
 })
 </script>
 
