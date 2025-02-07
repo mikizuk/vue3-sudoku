@@ -3,11 +3,13 @@ import { useSudokuStore, type Difficulty } from '@/stores/sudoku'
 import RetroButton from '@/components/slots/RetroButton.vue'
 import RetroSelect from '@/components/ui/RetroSelect.vue'
 import EmojiText from '@/components/slots/EmojiText.vue'
+import { storeToRefs } from 'pinia'
 
 const store = useSudokuStore()
+const { difficulties, selectedDifficulty } = storeToRefs(store)
 
 const onDifficultyChange = (value: Difficulty): void => {
-  store.setDifficulty(value)
+  store.setSelectedDifficulty(value)
 }
 const onStartGame = () => store.startGame()
 const onResetGame = () => {
@@ -25,8 +27,8 @@ const onResetGame = () => {
   >
     <RetroSelect
       label="Difficulty"
-      :selected="store.difficulty"
-      :options="store.difficulties"
+      :selected="selectedDifficulty"
+      :options="difficulties"
       @change="onDifficultyChange"
       :hideLabel="!store.isIntro"
     />

@@ -40,8 +40,8 @@ describe('GameDifficulty', () => {
     expect(wrapper.text()).toContain('And start the game!')
   })
 
-  it('calls setDifficulty when difficulty is changed', async () => {
-    const setDifficultySpy = vi.spyOn(store, 'setDifficulty')
+  it('calls setSelectedDifficulty when difficulty is changed', async () => {
+    const setDifficultySpy = vi.spyOn(store, 'setSelectedDifficulty')
     await wrapper.findComponent({ name: 'RetroSelect' }).vm.$emit('change', 'expert')
 
     expect(setDifficultySpy).toHaveBeenCalledWith('expert')

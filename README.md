@@ -112,7 +112,7 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## How to Play
 
-1. Select a difficulty level (Beginner to Expert)
+1. Select a difficulty level (Beginner to Expert, actually one more is added)
 2. Click on any empty cell in the grid
 3. Enter a number from 1-9
 4. Use the hint button (bulb icon) if you need assistance

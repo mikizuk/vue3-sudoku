@@ -19,7 +19,8 @@ export interface SudokuState {
   gameStatus: GameStatus
   isIntro: null | boolean
   isModalOpen: boolean
-  difficulty: Difficulty
+  selectedDifficulty: Difficulty
+  actualGameDifficulty: Difficulty
   difficulties: Difficulty[]
   hintsRemaining: number
   gameTime: Ref<number, number>

@@ -58,8 +58,9 @@ const onDigit = (e: number) => {
   }
 
   /* // remove later! */
-  .digits__item:last-of-type .digits__button {
+  /* .digits__item:last-of-type .digits__button {
     background-color: var(--soft-gray);
-  }
+  } */
+  /* // remove later! */
 }
 </style>

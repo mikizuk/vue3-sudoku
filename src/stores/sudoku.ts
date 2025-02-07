@@ -11,7 +11,8 @@ export const useSudokuStore = defineStore('sudoku', {
     gameStatus: 'notStarted',
     isIntro: null,
     isModalOpen: false,
-    difficulty: 'beginner' as Difficulty,
+    selectedDifficulty: 'beginner' as Difficulty,
+    actualGameDifficulty: 'beginner' as Difficulty,
     difficulties: DIFFICULTIES,
     hintsRemaining: 10,
     gameTime: elapsedTime,
@@ -46,6 +47,7 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     isGamePaused(): boolean {
       return this.gameStatus === 'paused'
+      // disable Reset & Hint buttons TODO:
     },
   },
 
@@ -67,8 +69,11 @@ export const useSudokuStore = defineStore('sudoku', {
       this.isModalOpen = !this.isModalOpen
     },
     // difficulty
-    setDifficulty(level: Difficulty) {
-      this.difficulty = level
+    setSelectedDifficulty(newDiff: Difficulty) {
+      this.selectedDifficulty = newDiff
+    },
+    setActualGameDifficulty(newDiff: Difficulty) {
+      this.actualGameDifficulty = newDiff
     },
     // hints
     resetHintsNumber() {
@@ -118,23 +123,24 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     startGame() {
       console.info('START GAME!!')
-      this.generateNewGame(this.difficulty)
+      this.generateNewGame(this.selectedDifficulty)
       this.hideIntro()
       startTime()
     },
     resetGame() {
-      if (this.isGamePaused) return
+      // if (this.isGamePaused) return
 
       console.info('RESET GAME!!')
       this.resetHintsNumber()
       this.setSelectedCell({ row: null, col: null })
       // reset points TODO:
-      this.generateNewGame(this.difficulty)
+      this.generateNewGame(this.selectedDifficulty)
       resetTime()
     },
     // game logic
     // sudoku engine
     generateNewGame(difficulty: Difficulty) {
+      this.setActualGameDifficulty(difficulty)
       console.info('GENERATE BOARD !!', difficulty)
       this.changeGameStatus('playing')
       const sudokuEngine = useSudokuEngine()

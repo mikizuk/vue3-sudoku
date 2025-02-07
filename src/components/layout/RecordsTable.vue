@@ -3,11 +3,11 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 
 const store = useSudokuStore()
-const { difficulties, difficulty } = storeToRefs(store)
+const { difficulties, actualGameDifficulty } = storeToRefs(store)
 </script>
 <template>
   <div class="records">
-    <h5 class="records__title">Records Table: {{ difficulty }}</h5>
+    <h5 class="records__title">Current difficulty: {{ actualGameDifficulty }}</h5>
 
     <ul class="records__table-list">
       <li class="records__table-item" v-for="difficulty in difficulties" :key="difficulty">
