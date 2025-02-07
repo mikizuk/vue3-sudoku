@@ -107,9 +107,13 @@ export const useSudokuStore = defineStore('sudoku', {
         this.selectedCell = cell
         // console.info('selectedCell b', cell)
       } else {
-        this.selectedCell = { row: null, col: null }
+        this.clearSelectedCell()
       }
     },
+    clearSelectedCell() {
+      this.selectedCell = { row: null, col: null }
+    },
+    // digit actions
     onDigitClick(digit: number | null) {
       // console.info('onDigitClick a', digit, this.selectedCell)
       if (this.isGamePaused || this.selectedCell.row === null || this.selectedCell.col === null) return
@@ -132,7 +136,7 @@ export const useSudokuStore = defineStore('sudoku', {
 
       console.info('RESET GAME!!')
       this.resetHintsNumber()
-      this.setSelectedCell({ row: null, col: null })
+      this.clearSelectedCell()
       // reset points TODO:
       this.generateNewGame(this.selectedDifficulty)
       resetTime()
