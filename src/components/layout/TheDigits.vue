@@ -2,28 +2,41 @@
 import { computed } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
+
 const store = useSudokuStore()
-
-const { isGamePaused } = storeToRefs(store)
+const { isGamePaused, playBoard } = storeToRefs(store)
 const digits: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const getDigitCount = (digit: number) => {
+  let count = 0
+  for (let row = 0; row < digits.length; row++) {
+    for (let col = 0; col < digits.length; col++) {
+      if (playBoard.value[row][col] === digit) {
+        count++
+      }
+    }
+  }
+  return count
+}
 
-const availableDigits = computed(() =>
-  digits.map((digit) => {
-    return { value: digit, isAvailable: true }
-  }),
+const availableDigits = computed(() => digits
+  .map((digit) => ({
+    value: digit,
+    isAvailable: getDigitCount(digit) < digits.length })
+  ),
 )
 
-const isButtonDisabled = computed(() => isGamePaused.value) // && all digits solved on playBoard
+const onDigit = (e: number) => store.onDigitClick(e)
 
-const onDigit = (e: number) => {
-  // console.info('ondigit', e)
-  store.onDigitClick(e)
-}
 </script>
 <template>
   <ul class="digits">
     <li class="digits__item" v-for="digit in availableDigits" :key="digit.value">
-      <button class="digits__button" @click="onDigit(digit.value)" :disabled="isButtonDisabled">
+      <button
+        class="digits__button"
+        :class="{'digits__button--disabled': !digit.isAvailable}"
+        @click="onDigit(digit.value)"
+        :disabled="!digit.isAvailable || isGamePaused"
+        >
         {{ digit.value }}
       </button>
     </li>
@@ -54,11 +67,14 @@ const onDigit = (e: number) => {
     cursor: pointer;
     height: 34px;
     width: 34px;
+    color: var(--charcoal-gray);
   }
 
-  .digits__item .digits__button:disabled {
-    background-color: var(--light-gray);
-    border: transparent;
+  /* .digits__item .digits__button:disabled, */
+  .digits__item .digits__button--disabled {
+    border-color: var(--soft-gray);
+    background-color: inherit;
+    color: var(--soft-gray);
   }
 
   @media (hover: hover) {
