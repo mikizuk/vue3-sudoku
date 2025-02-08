@@ -5,7 +5,15 @@ import { storeToRefs } from 'pinia'
 import { GET_BOX_INDEX } from '@/constants/constants'
 const store = useSudokuStore()
 
-const { solvedBoard, originalSolvedBoard, playBoard, isGamePaused, gameTime, selectedCell, completedSections } = storeToRefs(store) // canSelectCell
+const {
+  solvedBoard,
+  originalSolvedBoard,
+  playBoard,
+  isGamePaused,
+  gameTime,
+  selectedCell,
+  completedSections,
+  isGameFinished } = storeToRefs(store)
 
 const onCellClick = (row: number, col: number): void => {
   store.setSelectedCell({ row, col })
@@ -22,16 +30,15 @@ const getCellClasses = computed(() => (row: number, col: number) => ({
   'board__cell--original': !!originalSolvedBoard.value[row][col],
   'board__cell--completed-row': completedSections.value.find(section => section.type === 'row' && section.index === row),
   'board__cell--completed-col': completedSections.value.find(section => section.type === 'col' && section.index === col),
-  // 'board__cell--completed-box': completedSections.value.find(section => section.type === 'box' && section.index === Math.floor(row / 3) * 3 + Math.floor(col / 3)),
   'board__cell--completed-box': completedSections.value.find(section => section.type === 'box' && section.index === GET_BOX_INDEX(row, col)),
-  'board__cell--completed-all': false,
+  'board__cell--completed-all': isGameFinished.value,
 }))
 
 const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0)
 </script>
 
 <template>
-  <table class="board" :class="{ 'board--blurred': isBoardBlurred }">
+  <table class="board" :class="{ 'board--blurred': isBoardBlurred, 'board--completed': isGameFinished }">
     <tr class="board__row" v-for="(row, rowIndex) in playBoard" :key="rowIndex">
       <td class="board__cell" v-for="(digit, cellIndex) in row" :key="cellIndex">
         <button
@@ -118,8 +125,8 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
   .board__cell--completed-col,
   .board__cell--completed-box {
     background-color: var(--mint-green);
+    transition: background-color .7s ease-out;
   }
-
 
   transition: all 0.4s ease-out;
 }
@@ -127,4 +134,32 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
 .board--blurred {
   filter: blur(4px);
 }
+.board--completed {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
 </style>

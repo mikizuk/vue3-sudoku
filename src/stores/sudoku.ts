@@ -53,6 +53,9 @@ export const useSudokuStore = defineStore('sudoku', {
       return this.gameStatus === 'paused'
       // disable Reset & Hint buttons TODO:
     },
+    isGameFinished(): boolean {
+      return this.gameStatus === 'finished'
+    }
   },
 
   actions: {
@@ -135,8 +138,8 @@ export const useSudokuStore = defineStore('sudoku', {
       const { newBoard, originalBoard } = sudokuEngine.modifyBoardForPlay(this.solvedBoard, difficulty)
       this.playBoard = newBoard
       this.originalSolvedBoard = originalBoard
-      console.info('solvedBoard', this.solvedBoard)
-      console.info('playBoard', this.playBoard)
+      // console.info('solvedBoard', this.solvedBoard)
+      // console.info('playBoard', this.playBoard)
       // console.info('originalSolvedBoard', this.originalSolvedBoard)
     },
     // user actions
@@ -216,9 +219,14 @@ export const useSudokuStore = defineStore('sudoku', {
         checkEndGame = true
       }
 
-      if (checkEndGame) {
-        sudokuEngine.checkIsBoardFinished(this.playBoard, this.solvedBoard)
+      if (checkEndGame && sudokuEngine.checkIsBoardFinished(this.playBoard, this.solvedBoard)) {
+        this.finishGame()
       }
+    },
+    // enggame
+    finishGame() {
+      this.changeGameStatus('finished')
+      pauseTime()
     }
   },
 })

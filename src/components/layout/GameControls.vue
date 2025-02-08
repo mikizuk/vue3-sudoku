@@ -6,7 +6,7 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 
 const store = useSudokuStore()
-const { isGamePaused, hintsRemaining } = storeToRefs(store)
+const { isGamePaused, hintsRemaining, isGameFinished } = storeToRefs(store)
 
 const onTogglePause = () => {
   store.togglePause()
@@ -14,14 +14,11 @@ const onTogglePause = () => {
 const onHintClick = () => {
   store.useHint()
 }
-// const onEndGame = () => {
-//   console.info('end game!')
-// }
 </script>
 <template>
   <div class="controls">
     <GameDifficulty />
-    <RetroButton @click="onTogglePause">
+    <RetroButton v-if="!isGameFinished" @click="onTogglePause">
       <EmojiText v-if="isGamePaused">
         <template #emoji>▶️</template>
         <template #text>Resume</template>
@@ -31,7 +28,9 @@ const onHintClick = () => {
         <template #text>Pause</template>
       </EmojiText>
     </RetroButton>
-    <!-- <RetroButton @click="onEndGame">End</RetroButton> -->
+    <div v-if="isGameFinished" class="finish-info">
+      <p>Game finished!!!</p>
+    </div>
     <RetroButton @click="onHintClick" :disabled="isGamePaused">
       <EmojiText>
         <template #emoji>💡</template>
@@ -47,5 +46,10 @@ const onHintClick = () => {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.4rem;
+}
+
+.finish-info {
+  display: flex;
+  align-items: center;
 }
 </style>

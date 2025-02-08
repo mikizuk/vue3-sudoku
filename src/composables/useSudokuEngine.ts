@@ -168,10 +168,7 @@ export function useSudokuEngine() {
     return uniqueDigits.size === 9
   }
   const checkIsBoardFinished = (playBoard: SudokuBoard, solvedBoard: SudokuBoard): boolean => {
-    console.log('checkIsBoardFinished!',
-      JSON.parse(JSON.stringify(playBoard)) === JSON.parse(JSON.stringify(solvedBoard))
-    )
-    return JSON.parse(JSON.stringify(playBoard)) === JSON.parse(JSON.stringify(solvedBoard));
+    return JSON.stringify(playBoard) === JSON.stringify(solvedBoard);
   }
 
   return {
