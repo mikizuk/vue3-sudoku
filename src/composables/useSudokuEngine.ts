@@ -1,6 +1,6 @@
 import { DIFFICULTY_RANGES } from '@/constants/constants'
 import type { Difficulty, SudokuBoard } from '@/types/sudokuTypes'
-import { useRandom } from '@/composables/useRandom'
+import { getRandomNumber, shuffleArray } from '@/utils/randoms'
 
 export function useSudokuEngine() {
   const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -63,7 +63,6 @@ export function useSudokuEngine() {
     }
 
     // give to a cell (board[sudokuRow][sudokuCol]) a new random digit
-    const { shuffleArray } = useRandom()
     const randomDigits = shuffleArray(DIGITS)
 
     for (const digit of randomDigits) {
@@ -99,7 +98,6 @@ export function useSudokuEngine() {
     newBoard: SudokuBoard
     originalBoard: SudokuBoard
   } => {
-    const { getRandomNumber } = useRandom()
     const range = DIFFICULTY_RANGES[difficulty]
     const cellsToRemove = getRandomNumber(range.min, range.max)
     // console.info('generatePlayBoard', difficulty, range, cellsToRemove, solvedBoard)

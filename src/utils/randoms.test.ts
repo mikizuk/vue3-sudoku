@@ -1,9 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { useRandom } from './useRandom'
+import { getRandomNumber, shuffleArray } from './randoms'
 
-describe('useRandom', () => {
-  const { getRandomNumber, shuffleArray } = useRandom()
-
+describe('randoms', () => {
   describe('getRandomNumber', () => {
     it('generates a number within the default range', () => {
       const result = getRandomNumber()
@@ -43,7 +41,7 @@ describe('useRandom', () => {
     it('shuffles an array of numbers', () => {
       const originalArray = [1, 2, 3, 4, 5]
       const shuffledArray = shuffleArray([...originalArray])
-
+      
       expect(shuffledArray.sort()).toEqual(originalArray)
     })
 

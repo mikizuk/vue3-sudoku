@@ -25,7 +25,7 @@ watch(() => playBoard.value, () => {
   showAnimation.value = true
     setTimeout(() => {
       showAnimation.value = false
-    }, 700)
+    }, 1000)
 }, { deep: true})
 
 const getCellClasses = computed(() => (row: number, col: number) => ({
@@ -125,7 +125,7 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
   .board__cell--completed-col,
   .board__cell--completed-box {
     background-color: var(--mint-green);
-    transition: background-color 0.7s ease-out;
+    transition: background-color 1s ease-in-out;
   }
 
   /* transition: all 0.4s ease-out; */
