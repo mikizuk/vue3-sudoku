@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
+import { GET_BOX_INDEX } from '@/constants/constants'
 const store = useSudokuStore()
 
 const { solvedBoard, originalSolvedBoard, playBoard, isGamePaused, gameTime, selectedCell, completedSections } = storeToRefs(store) // canSelectCell
@@ -21,7 +22,9 @@ const getCellClasses = computed(() => (row: number, col: number) => ({
   'board__cell--original': !!originalSolvedBoard.value[row][col],
   'board__cell--completed-row': completedSections.value.find(section => section.type === 'row' && section.index === row),
   'board__cell--completed-col': completedSections.value.find(section => section.type === 'col' && section.index === col),
-  'board__cell--completed-box': completedSections.value.find(section => section.type === 'box' && section.index === Math.floor(row / 3) * 3 + Math.floor(col / 3)),
+  // 'board__cell--completed-box': completedSections.value.find(section => section.type === 'box' && section.index === Math.floor(row / 3) * 3 + Math.floor(col / 3)),
+  'board__cell--completed-box': completedSections.value.find(section => section.type === 'box' && section.index === GET_BOX_INDEX(row, col)),
+  'board__cell--completed-all': false,
 }))
 
 const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0)
@@ -110,6 +113,7 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
     background-color: var(--crimson-red);
   }
   
+  .board__cell--completed-all,
   .board__cell--completed-row,
   .board__cell--completed-col,
   .board__cell--completed-box {

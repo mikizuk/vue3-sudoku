@@ -15,3 +15,7 @@ export const CORRECT_GUESS_POINTS = 5
 export const INITIAL_REMAINING_HINTS = 10
 export const INITIAL_HINT_PENALTY = 3
 export const NEXT_HINT_PENALTY = 1
+
+export const GET_BOX_ROW_INDEX = (row: number) => Math.floor(row / 3) * 3
+export const GET_BOX_COL_INDEX = (col: number) => Math.floor(col / 3)
+export const GET_BOX_INDEX = (row: number, col: number) => GET_BOX_ROW_INDEX(row) + GET_BOX_COL_INDEX(col)

@@ -1,7 +1,7 @@
 import { useTimer } from '@/composables/useTimer'
 import { defineStore } from 'pinia'
 import type { Cell, CompletedSection, Difficulty, GameAction, GameStatus, SudokuState } from '@/types/sudokuTypes'
-import { DIFFICULTIES, INITIAL_REMAINING_HINTS } from '@/constants/constants'
+import { DIFFICULTIES, GET_BOX_INDEX, INITIAL_REMAINING_HINTS } from '@/constants/constants'
 import { useSudokuEngine } from '@/composables/useSudokuEngine'
 import { useScoreSystem } from '@/composables/useScoreSystem'
 
@@ -198,30 +198,21 @@ export const useSudokuStore = defineStore('sudoku', {
       this.completedSections.push(section)
     },
     checkBoard(row: number, col: number) {
-      console.log('checkBoard...', this.playBoard)
-      // check if row/col/box of playBoard is the same as solvedBoard
-      // check if whole playBoard is the same as solvedBoard
+      console.log('checkBoard...')
       const sudokuEngine = useSudokuEngine()
       let checkEndGame = false
       
       if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'row', row)) {
-        console.log('SAME ROW!')
         this.addCompletedSection({ type: 'row', index: row})
-        // animation
-
         checkEndGame = true
       }
       if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'col', col)) {
-        console.log('SAME COL!')
         this.addCompletedSection({ type: 'col', index: col})
-        // animation
         checkEndGame = true
       }
-      const boxIndex = Math.floor(row / 3) * 3 + Math.floor(col / 3)
+      const boxIndex = GET_BOX_INDEX(row, col)
       if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'box', boxIndex)) {
-        console.log('SAME BOX!')
         this.addCompletedSection({ type: 'box', index: boxIndex})
-        // animation
         checkEndGame = true
       }
 
