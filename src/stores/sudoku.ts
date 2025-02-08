@@ -1,6 +1,6 @@
 import { useTimer } from '@/composables/useTimer'
 import { defineStore } from 'pinia'
-import type { Cell, Difficulty, GameAction, GameStatus, SudokuState } from '@/types/sudokuTypes'
+import type { Cell, CompletedSection, Difficulty, GameAction, GameStatus, SudokuState } from '@/types/sudokuTypes'
 import { DIFFICULTIES, INITIAL_REMAINING_HINTS } from '@/constants/constants'
 import { useSudokuEngine } from '@/composables/useSudokuEngine'
 import { useScoreSystem } from '@/composables/useScoreSystem'
@@ -28,7 +28,8 @@ export const useSudokuStore = defineStore('sudoku', {
       .map(() => Array(9).fill(null)),
     selectedCell: { row: null, col: null },
     gameScore: 0,
-    hintsUsed: 0
+    hintsUsed: 0,
+    completedSections: [],
   }),
 
   getters: {
@@ -127,7 +128,7 @@ export const useSudokuStore = defineStore('sudoku', {
     // game logic | sudoku engine
     generateNewGame(difficulty: Difficulty) {
       this.setActualGameDifficulty(difficulty)
-      console.info('GENERATE BOARD !!', difficulty)
+      // console.info('GENERATE BOARD !!', difficulty)
       this.changeGameStatus('playing')
       const sudokuEngine = useSudokuEngine()
       this.solvedBoard = sudokuEngine.generateSolvedBoard()
@@ -136,7 +137,7 @@ export const useSudokuStore = defineStore('sudoku', {
       this.originalSolvedBoard = originalBoard
       console.info('solvedBoard', this.solvedBoard)
       console.info('playBoard', this.playBoard)
-      console.info('originalSolvedBoard', this.originalSolvedBoard)
+      // console.info('originalSolvedBoard', this.originalSolvedBoard)
     },
     // user actions
     useHint() {
@@ -153,6 +154,7 @@ export const useSudokuStore = defineStore('sudoku', {
 
       this.updateScore('hint')
       this.deductHints()
+      this.checkBoard(row, col)
     },
     onDigitClick(digit: number | null) {
       const { row, col } = this.selectedCell
@@ -167,6 +169,7 @@ export const useSudokuStore = defineStore('sudoku', {
       
       if (digit === this.solvedBoard[row][col]) { // is corect digit entered
         this.updateScore('correct')
+        this.checkBoard(row, col)
     } else {
         this.updateScore('error')
       }
@@ -190,5 +193,41 @@ export const useSudokuStore = defineStore('sudoku', {
           break;
       }
     },
+    // check board & endgame
+    addCompletedSection(section: CompletedSection) {
+      this.completedSections.push(section)
+    },
+    checkBoard(row: number, col: number) {
+      console.log('checkBoard...', this.playBoard)
+      // check if row/col/box of playBoard is the same as solvedBoard
+      // check if whole playBoard is the same as solvedBoard
+      const sudokuEngine = useSudokuEngine()
+      let checkEndGame = false
+      
+      if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'row', row)) {
+        console.log('SAME ROW!')
+        this.addCompletedSection({ type: 'row', index: row})
+        // animation
+
+        checkEndGame = true
+      }
+      if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'col', col)) {
+        console.log('SAME COL!')
+        this.addCompletedSection({ type: 'col', index: col})
+        // animation
+        checkEndGame = true
+      }
+      const boxIndex = Math.floor(row / 3) * 3 + Math.floor(col / 3)
+      if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'box', boxIndex)) {
+        console.log('SAME BOX!')
+        this.addCompletedSection({ type: 'box', index: boxIndex})
+        // animation
+        checkEndGame = true
+      }
+
+      if (checkEndGame) {
+        sudokuEngine.checkIsBoardFinished(this.playBoard, this.solvedBoard)
+      }
+    }
   },
 })

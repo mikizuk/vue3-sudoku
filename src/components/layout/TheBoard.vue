@@ -4,7 +4,7 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 const store = useSudokuStore()
 
-const { solvedBoard, originalSolvedBoard, playBoard, isGamePaused, gameTime, selectedCell } = storeToRefs(store) // canSelectCell
+const { solvedBoard, originalSolvedBoard, playBoard, isGamePaused, gameTime, selectedCell, completedSections } = storeToRefs(store) // canSelectCell
 
 const onCellClick = (row: number, col: number): void => {
   store.setSelectedCell({ row, col })
@@ -19,6 +19,9 @@ const getCellClasses = computed(() => (row: number, col: number) => ({
     playBoard.value[row][col] !== solvedBoard.value[row][col] &&
     !originalSolvedBoard.value[row][col],
   'board__cell--original': !!originalSolvedBoard.value[row][col],
+  'board__cell--completed-row': completedSections.value.find(section => section.type === 'row' && section.index === row),
+  'board__cell--completed-col': completedSections.value.find(section => section.type === 'col' && section.index === col),
+  'board__cell--completed-box': completedSections.value.find(section => section.type === 'box' && section.index === Math.floor(row / 3) * 3 + Math.floor(col / 3)),
 }))
 
 const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0)
@@ -106,6 +109,14 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
   .board__cell--error {
     background-color: var(--crimson-red);
   }
+  
+  .board__cell--completed-row,
+  .board__cell--completed-col,
+  .board__cell--completed-box {
+    background-color: var(--mint-green);
+  }
+
+
   transition: all 0.4s ease-out;
 }
 

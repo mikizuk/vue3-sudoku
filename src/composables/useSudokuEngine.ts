@@ -127,8 +127,57 @@ export function useSudokuEngine() {
     }
   }
 
+  // CHECK DIFFERENCES BETWEEN A SOLVED BOARD AND A PLAYING BOARD
+  const checkSection = (playBoard: SudokuBoard, solvedBoard: SudokuBoard, section: string, indexCheck: number): boolean => {
+    const uniqueDigits = new Set();
+
+    if (section === 'row') {
+      for (let col = 0; col < 9; col++) {
+        if (playBoard[indexCheck][col] !== solvedBoard[indexCheck][col]) {
+          return false
+        } else {
+          uniqueDigits.add(playBoard[indexCheck][col])
+        }
+      }
+    } else if (section === 'col') {
+      for (let row = 0; row < 9; row++) {
+        if (playBoard[row][indexCheck] !== solvedBoard[row][indexCheck]) {
+          return false
+        } else {
+          uniqueDigits.add(playBoard[row][indexCheck])
+        }
+      }
+    } else if (section === 'box') {
+      const startingRow = Math.floor(indexCheck / 3) * 3
+      const startingCol = (indexCheck % 3) * 3
+      for (let i = 0; i < 3; i++) {        
+        for (let j = 0; j < 3; j++) {
+          const checkedRow = startingRow + i
+          const checkedCol = startingCol + j
+
+          if (playBoard[checkedRow][checkedCol] !== solvedBoard[checkedRow][checkedCol]) {
+            return false
+          } else {
+            uniqueDigits.add(playBoard[checkedRow][checkedCol])
+          }
+        }
+      }
+  
+    }
+
+    return uniqueDigits.size === 9
+  }
+  const checkIsBoardFinished = (playBoard: SudokuBoard, solvedBoard: SudokuBoard): boolean => {
+    console.log('checkIsBoardFinished!',
+      JSON.parse(JSON.stringify(playBoard)) === JSON.parse(JSON.stringify(solvedBoard))
+    )
+    return JSON.parse(JSON.stringify(playBoard)) === JSON.parse(JSON.stringify(solvedBoard));
+  }
+
   return {
     generateSolvedBoard,
     modifyBoardForPlay,
+    checkSection,
+    checkIsBoardFinished
   }
 }

@@ -2,6 +2,8 @@ import { type Ref } from 'vue'
 
 export type Difficulty = 'testing' | 'beginner' | 'intermediate' | 'hard' | 'expert'
 export type GameStatus = 'notStarted' | 'playing' | 'paused' | 'finished'
+export type GameAction = 'correct' | 'error' | 'hint' | 'reset'
+export type SectionType = 'row' | 'col' | 'box'
 
 export interface DifficultyRange {
   min: number
@@ -13,7 +15,10 @@ export interface Cell {
   col: number | null
 }
 
-export type GameAction = 'correct' | 'error' | 'hint' | 'reset'
+export interface CompletedSection {
+  type: SectionType
+  index: number
+}
 
 export type SudokuBoard = number[][] | null[][]
 
@@ -32,4 +37,5 @@ export interface SudokuState {
   selectedCell: Cell
   gameScore: number
   hintsUsed: number
+  completedSections: CompletedSection[]
 }
