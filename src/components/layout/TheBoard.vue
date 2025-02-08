@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 import { GET_BOX_INDEX } from '@/constants/constants'
-const store = useSudokuStore()
 
+const store = useSudokuStore()
+const showAnimation = ref(false)
 const {
   solvedBoard,
   originalSolvedBoard,
@@ -13,24 +14,38 @@ const {
   gameTime,
   selectedCell,
   completedSections,
-  isGameFinished } = storeToRefs(store)
+  isGameFinished,
+} = storeToRefs(store)
 
 const onCellClick = (row: number, col: number): void => {
   store.setSelectedCell({ row, col })
 }
 
+watch(() => playBoard.value, () => {
+  showAnimation.value = true
+    setTimeout(() => {
+      showAnimation.value = false
+    }, 700)
+}, { deep: true})
+
 const getCellClasses = computed(() => (row: number, col: number) => ({
   'board__cell--selected': row === selectedCell.value.row && col === selectedCell.value.col,
   'board__cell--correct':
-    playBoard.value[row][col] === solvedBoard.value[row][col] && !originalSolvedBoard.value[row][col],
+    showAnimation.value &&
+    playBoard.value[row][col] === solvedBoard.value[row][col] &&
+    !originalSolvedBoard.value[row][col],
   'board__cell--error':
     playBoard.value[row][col] !== null &&
     playBoard.value[row][col] !== solvedBoard.value[row][col] &&
     !originalSolvedBoard.value[row][col],
   'board__cell--original': !!originalSolvedBoard.value[row][col],
-  'board__cell--completed-row': completedSections.value.find(section => section.type === 'row' && section.index === row),
-  'board__cell--completed-col': completedSections.value.find(section => section.type === 'col' && section.index === col),
-  'board__cell--completed-box': completedSections.value.find(section => section.type === 'box' && section.index === GET_BOX_INDEX(row, col)),
+  'board__cell--completed-row':
+    showAnimation.value && completedSections.value.find((section) => section.type === 'row' && section.index === row),
+  'board__cell--completed-col':
+    showAnimation.value && completedSections.value.find((section) => section.type === 'col' && section.index === col),
+  'board__cell--completed-box':
+    showAnimation.value &&
+    completedSections.value.find((section) => section.type === 'box' && section.index === GET_BOX_INDEX(row, col)),
   'board__cell--completed-all': isGameFinished.value,
 }))
 
@@ -86,27 +101,12 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
   }
 
   .board__cell:nth-child(3n) {
-    /* border-right: solid; */
     border-right: 3px solid var(--charcoal-gray);
-
   }
   .board__row:nth-child(3n) .board__cell {
-    /* border-bottom: solid; */
     border-bottom: 3px solid var(--charcoal-gray);
   }
-  /* Delete below later */
-  /* .board__row:nth-of-type(1) > .board__cell:nth-of-type(1) {
-    background-color: var(--soft-gray);
-  }
-  .board__row:nth-of-type(1) > .board__cell:nth-of-type(2) {
-    background-color: var(--mint-green);
-  }
-  .board__row:nth-of-type(1) > .board__cell:nth-of-type(3) {
-    background-color: var(--crimson-red);
-  } */
-  /* Delete above later */
 
-  /* .board__row:nth-of-type(1) > .board__cell:nth-of-type(4), */
   .board__cell--original {
     background-color: var(--soft-gray);
   }
@@ -119,16 +119,16 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
   .board__cell--error {
     background-color: var(--crimson-red);
   }
-  
+
   .board__cell--completed-all,
   .board__cell--completed-row,
   .board__cell--completed-col,
   .board__cell--completed-box {
     background-color: var(--mint-green);
-    transition: background-color .7s ease-out;
+    transition: background-color 0.7s ease-out;
   }
 
-  transition: all 0.4s ease-out;
+  /* transition: all 0.4s ease-out; */
 }
 
 .board--blurred {
@@ -161,5 +161,4 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
     transform: translate3d(4px, 0, 0);
   }
 }
-
 </style>

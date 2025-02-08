@@ -102,12 +102,10 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     // cell actions
     setSelectedCell(cell: Cell) {
-      console.info('selectedCell a', cell)
       if (this.isGamePaused || cell.row === null || cell.col === null) return
 
       if (!this.originalSolvedBoard[cell.row][cell.col]) {
         this.selectedCell = cell
-        // console.info('selectedCell b', cell)
       } else {
         this.clearSelectedCell()
       }
@@ -116,7 +114,6 @@ export const useSudokuStore = defineStore('sudoku', {
       this.selectedCell = { row: null, col: null }
     },
     startGame() {
-      console.info('START GAME!!')
       this.generateNewGame(this.selectedDifficulty)
       this.hideIntro()
       startTime()
@@ -131,16 +128,13 @@ export const useSudokuStore = defineStore('sudoku', {
     // game logic | sudoku engine
     generateNewGame(difficulty: Difficulty) {
       this.setActualGameDifficulty(difficulty)
-      // console.info('GENERATE BOARD !!', difficulty)
       this.changeGameStatus('playing')
+
       const sudokuEngine = useSudokuEngine()
       this.solvedBoard = sudokuEngine.generateSolvedBoard()
       const { newBoard, originalBoard } = sudokuEngine.modifyBoardForPlay(this.solvedBoard, difficulty)
       this.playBoard = newBoard
       this.originalSolvedBoard = originalBoard
-      // console.info('solvedBoard', this.solvedBoard)
-      // console.info('playBoard', this.playBoard)
-      // console.info('originalSolvedBoard', this.originalSolvedBoard)
     },
     // user actions
     useHint() {
@@ -201,7 +195,6 @@ export const useSudokuStore = defineStore('sudoku', {
       this.completedSections.push(section)
     },
     checkBoard(row: number, col: number) {
-      console.log('checkBoard...')
       const sudokuEngine = useSudokuEngine()
       let checkEndGame = false
       
@@ -223,10 +216,11 @@ export const useSudokuStore = defineStore('sudoku', {
         this.finishGame()
       }
     },
-    // enggame
+    // endgame
     finishGame() {
       this.changeGameStatus('finished')
       pauseTime()
+      this.completedSections.length = 0
     }
   },
 })
