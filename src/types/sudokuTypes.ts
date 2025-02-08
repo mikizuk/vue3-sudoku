@@ -13,6 +13,8 @@ export interface Cell {
   col: number | null
 }
 
+export type GameAction = 'correct' | 'error' | 'hint' | 'reset'
+
 export type SudokuBoard = number[][] | null[][]
 
 export interface SudokuState {
@@ -29,4 +31,5 @@ export interface SudokuState {
   playBoard: SudokuBoard
   selectedCell: Cell
   gameScore: number
+  hintsUsed: number
 }

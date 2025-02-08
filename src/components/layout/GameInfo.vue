@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 
 const store = useSudokuStore()
 const { capitalize } = useCapitalize()
-const { formattedTime, actualGameDifficulty } = storeToRefs(store)
+const { formattedTime, actualGameDifficulty, gameScore } = storeToRefs(store)
 </script>
 <template>
   <div class="results">
@@ -16,7 +16,7 @@ const { formattedTime, actualGameDifficulty } = storeToRefs(store)
       <span :class="`color--${actualGameDifficulty}`">{{ capitalize(actualGameDifficulty) }}</span>
     </div>
 
-    <div><strong>Score:</strong><span>432</span></div>
+    <div><strong>Score:</strong><span>{{ gameScore }}</span></div>
   </div>
 </template>
 

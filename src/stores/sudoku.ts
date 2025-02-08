@@ -1,7 +1,7 @@
 import { useTimer } from '@/composables/useTimer'
 import { defineStore } from 'pinia'
-import type { Cell, Difficulty, GameStatus, SudokuState } from '@/types/sudokuTypes'
-import { DIFFICULTIES, INITIAL_HINT_REMAINING } from '@/constants/constants'
+import type { Cell, Difficulty, GameAction, GameStatus, SudokuState } from '@/types/sudokuTypes'
+import { DIFFICULTIES, INITIAL_REMAINING_HINTS } from '@/constants/constants'
 import { useSudokuEngine } from '@/composables/useSudokuEngine'
 import { useScoreSystem } from '@/composables/useScoreSystem'
 
@@ -12,10 +12,10 @@ export const useSudokuStore = defineStore('sudoku', {
     gameStatus: 'notStarted',
     isIntro: null,
     isModalOpen: false,
-    selectedDifficulty: 'beginner' as Difficulty,
-    actualGameDifficulty: 'beginner' as Difficulty,
+    selectedDifficulty: 'testing' as Difficulty,
+    actualGameDifficulty: 'testing' as Difficulty,
     difficulties: DIFFICULTIES,
-    hintsRemaining: INITIAL_HINT_REMAINING,
+    hintsRemaining: INITIAL_REMAINING_HINTS,
     gameTime: elapsedTime,
     solvedBoard: Array(9)
       .fill(null)
@@ -28,6 +28,7 @@ export const useSudokuStore = defineStore('sudoku', {
       .map(() => Array(9).fill(null)),
     selectedCell: { row: null, col: null },
     gameScore: 0,
+    hintsUsed: 0
   }),
 
   getters: {
@@ -79,10 +80,14 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     // hints
     resetHintsNumber() {
-      this.hintsRemaining = INITIAL_HINT_REMAINING
+      this.hintsRemaining = INITIAL_REMAINING_HINTS
+    },
+    deductHints() {
+      this.hintsRemaining -= 1
     },
     // game controls
     togglePause() {
+
       if (this.isGamePlaying) {
         this.changeGameStatus('paused')
         pauseTime()
@@ -93,7 +98,7 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     // cell actions
     setSelectedCell(cell: Cell) {
-      // console.info('selectedCell a', cell)
+      console.info('selectedCell a', cell)
       if (this.isGamePaused || cell.row === null || cell.col === null) return
 
       if (!this.originalSolvedBoard[cell.row][cell.col]) {
@@ -113,13 +118,10 @@ export const useSudokuStore = defineStore('sudoku', {
       startTime()
     },
     resetGame() {
-      // if (this.isGamePaused) return
-
-      console.info('RESET GAME!!')
       this.resetHintsNumber()
       this.clearSelectedCell()
-      // reset points TODO:
       this.generateNewGame(this.selectedDifficulty)
+      this.updateScore('reset')
       resetTime()
     },
     // game logic | sudoku engine
@@ -132,35 +134,61 @@ export const useSudokuStore = defineStore('sudoku', {
       const { newBoard, originalBoard } = sudokuEngine.modifyBoardForPlay(this.solvedBoard, difficulty)
       this.playBoard = newBoard
       this.originalSolvedBoard = originalBoard
-      // console.info('solvedBoard', this.solvedBoard)
-      // console.info('playBoard', this.playBoard)
-      // console.info('originalSolvedBoard', this.originalSolvedBoard)
+      console.info('solvedBoard', this.solvedBoard)
+      console.info('playBoard', this.playBoard)
+      console.info('originalSolvedBoard', this.originalSolvedBoard)
     },
     // user actions
     useHint() {
-      if (!this.canUseHint || !this.isGamePlaying) return
+      const { row, col } = this.selectedCell
+      if (
+        !this.canUseHint ||
+        !this.isGamePlaying ||
+        row === null ||
+        col === null ||
+        this.playBoard[row][col] === this.solvedBoard[row][col] // is already a correct digit
+      ) return
 
-      this.hintsRemaining -= 1
-      console.info('useHint this.hintsRemaining', this.hintsRemaining)
-      this.updateScore(null, true)
+      this.playBoard[row][col] = this.solvedBoard[row][col]
+
+      this.updateScore('hint')
+      this.deductHints()
     },
     onDigitClick(digit: number | null) {
-      console.info('onDigitClick digit', digit, 'selectedCell', this.selectedCell)
-      if (this.isGamePaused || this.selectedCell.row === null || this.selectedCell.col === null) return
-
       const { row, col } = this.selectedCell
-      const isGuessCorrect = digit === this.solvedBoard[row][col]
+      if (
+        this.isGamePaused ||
+        row === null ||
+        col === null ||
+        this.playBoard[row][col] === this.solvedBoard[row][col] // is already a correct digit
+      ) return
+
       this.playBoard[row][col] = digit
-      this.updateScore(isGuessCorrect)
+      
+      if (digit === this.solvedBoard[row][col]) { // is corect digit entered
+        this.updateScore('correct')
+    } else {
+        this.updateScore('error')
+      }
     },
     // score system
-    updateScore(isGuessCorrect: boolean | null, usedHint = false) {
-      // give hint TODO:
-      // add penalty TODO:
-      // chnage score TODO:
-      // fill the board TODO:
-      const { actualScore } = useScoreSystem(this.gameScore)
-      console.info('updateScore', isGuessCorrect, usedHint, actualScore)
+    updateScore(action: GameAction) {
+      const { correctGuess, wrongGuess, useHint, resetScore } = useScoreSystem() // this.gameScore
+
+      switch (action) {
+        case 'hint':
+          useHint()
+            this.clearSelectedCell()
+          break;
+          case 'correct':
+            correctGuess()
+            this.clearSelectedCell()
+        break;
+        case 'error': wrongGuess()
+          break;
+        case 'reset': resetScore()
+          break;
+      }
     },
   },
 })

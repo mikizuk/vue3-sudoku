@@ -1,34 +1,34 @@
-import { INITIAL_HINT_PENALTY } from '@/constants/constants'
-import { ref, toValue } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
-/**
-- Every correct cell will result in +5 points
-- Every hint will result in -3 points
-- Every next hint will be -1 from the previously subtracted hint points (i.e. if first hint has decreased 3 points,
-the next will result in minus 4, the next next in minus 5, etc)
-- Every error will result in -1 point.
- */
+import { CORRECT_GUESS_POINTS, INITIAL_HINT_PENALTY, NEXT_HINT_PENALTY, WRONG_GUESS_POINTS } from '@/constants/constants'
 
 export function useScoreSystem() {
   const store = useSudokuStore()
-  const { score } = storeToRefs(store)
-  const hintUsed = ref(0)
-  // const hintPenalty = () => {
-  // INITIAL_HINT_PENALTY
-  // NEXT_HINT_PENALTY
-  // }
+  const { gameScore, hintsUsed } = storeToRefs(store)
 
-  // const error
+  const correctGuess = () => {
+    gameScore.value += CORRECT_GUESS_POINTS
+  }
+  const wrongGuess = () => {
+    gameScore.value -= WRONG_GUESS_POINTS
 
-  // const useHint = () => {
-  //   let nextHintPenalty = 0
-  // }
+  }
+  const useHint = () => {
+    const hintPenalty = hintsUsed.value === 0
+      ? INITIAL_HINT_PENALTY
+      : (INITIAL_HINT_PENALTY + (hintsUsed.value * NEXT_HINT_PENALTY))
+    gameScore.value -= hintPenalty
+    hintsUsed.value += 1
+  }
 
-  const actualScore = toValue(score)
-  console.info('actualScore', actualScore)
+  const resetScore = () => {
+    gameScore.value = 0
+  }
 
   return {
-    actualScore,
+    correctGuess,
+    wrongGuess,
+    useHint,
+    resetScore
   }
 }
