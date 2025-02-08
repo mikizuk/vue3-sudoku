@@ -73,10 +73,13 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
   }
 
   .board__cell:nth-child(3n) {
-    border-right: solid;
+    /* border-right: solid; */
+    border-right: 3px solid var(--charcoal-gray);
+
   }
   .board__row:nth-child(3n) .board__cell {
-    border-bottom: solid;
+    /* border-bottom: solid; */
+    border-bottom: 3px solid var(--charcoal-gray);
   }
   /* Delete below later */
   /* .board__row:nth-of-type(1) > .board__cell:nth-of-type(1) {

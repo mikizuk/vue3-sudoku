@@ -37,17 +37,19 @@ const onDigit = (e: number) => {
   justify-content: space-between;
   /* gap: 1rem; */
 
-  .digits__item {
-    border: 2px solid var(--charcoal-gray);
-    border-radius: 3px;
+  /* .digits__item { */
+    /* border: 2px solid var(--charcoal-gray); */
+    /* border-radius: 3px; */
     /* padding: 4px; */
-  }
+  /* } */
 
   .digits__item:active {
     outline: 2px solid var(--royal-blue);
   }
 
   .digits__button {
+    border: 3px solid var(--charcoal-gray);
+    border-radius: 3px;
     background-color: var(--white);
     cursor: pointer;
     height: 34px;
@@ -56,6 +58,7 @@ const onDigit = (e: number) => {
 
   .digits__item .digits__button:disabled {
     background-color: var(--light-gray);
+    border: transparent;
   }
 
   @media (hover: hover) {
