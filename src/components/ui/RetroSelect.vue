@@ -41,6 +41,11 @@ const onSelect = (event: Event) => {
   font-size: 0.7rem;
   width: fit-content;
 
+  @media (min-width: 769px) {
+    font-size: 1rem;
+    padding: 15px 20px;
+  }
+
   .retro-select__option {
     background-color: var(--sky-blue);
   }

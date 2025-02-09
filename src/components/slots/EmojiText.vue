@@ -22,6 +22,7 @@
   gap: 0.4rem;
   /* height: 25px; */
   /* padding: 2px; */
+  align-items: end;
 }
 
 .slot__emoji {
@@ -30,11 +31,15 @@
 
 .slot__strong,
 .slot__text {
-  height: 100%;
-  line-height: 19px;
+  /* height: 100%; */
+  /* line-height: 19px; */
+  /* align-self: center; */
+  display: flex;
+  align-items: end;
 
   @media (min-width: 769px) {
-    /* line-height: 25px; */
+    /* line-height: 35px; */
+    /* background-color: red; */
   }
 
   @media (min-width: 1280px) {

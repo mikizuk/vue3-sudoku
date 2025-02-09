@@ -12,6 +12,11 @@
   border-radius: 3px;
   padding: 5px 10px;
   cursor: pointer;
+
+  @media (min-width: 769px) {
+    font-size: 1rem;
+    padding: 15px 20px;
+  }
 }
 .retro-button:disabled {
   color: var(--soft-gray);

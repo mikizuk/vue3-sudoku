@@ -73,22 +73,6 @@ const { difficulties, gameScoreRecords } = storeToRefs(store)
   }
 }
 
-// .records__table-item:nth-of-type(1) .table__caption {
-//   color: var(--mint-green);
-// }
-// .records__table-item:nth-of-type(2) .table__caption {
-//   color: var(--teal-green);
-// }
-// .records__table-item:nth-of-type(3) .table__caption {
-//   color: var(--royal-blue);
-// }
-// .records__table-item:nth-of-type(4) .table__caption {
-//   color: var(--golden-yellow);
-// }
-// .records__table-item:nth-of-type(5) .table__caption {
-//   color: var(--crimson-red);
-// }
-
 .table {
   margin-top: 0.5rem;
   width: 300px;
@@ -99,6 +83,13 @@ const { difficulties, gameScoreRecords } = storeToRefs(store)
 
   .table__caption {
     padding-bottom: 5px;
+  }
+
+  @media (min-width: 769px) {
+    font-size: 0.8rem;
+    // padding: 0.4rem;
+
+    border-spacing: 10px 10px;
   }
 }
 </style>

@@ -42,8 +42,10 @@ const onToggleModal = () => {
   padding-inline: 6px;
 
   @media (min-width: 769px) {
-    // padding-block: 12px;
-    // padding-inline: 12px;
+    font-size: 1rem;
+    // border: 1px solid red;
+    padding-block: 20px;
+    padding-inline: 20px;
   }
 
   @media (min-width: 1280px) {

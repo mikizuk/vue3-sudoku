@@ -50,10 +50,10 @@ main {
   padding-inline: 8px;
   // border: 1px solid green;
 
-  // @media (min-width: 769px) {
-  //   padding-block: 22%;
-  //   padding-inline: 12px;
-  // }
+  @media (min-width: 769px) {
+    // padding-block: 22%;
+    padding-inline: 20px;
+  }
 
   // @media (min-width: 1280px) {
   //   padding-block: 15%;
@@ -77,6 +77,9 @@ main {
   .records {
     margin-block: 0.6rem;
     // border: 1px solid red;
+    @media (min-width: 769px) {
+      margin-block: 2rem;
+    }
   }
 }
 

@@ -27,5 +27,10 @@ const { formattedTime, actualGameDifficulty, gameScore } = storeToRefs(store)
   display: flex;
   // justify-content: space-evenly;
   justify-content: space-between;
+
+  @media (min-width: 769px) {
+    gap: 1.5rem;
+    font-size: 1rem;
+  }
 }
 </style>

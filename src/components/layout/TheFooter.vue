@@ -50,9 +50,10 @@ const version: string = __APP_VERSION__
   gap: 0.5rem;
 
   @media (min-width: 769px) {
-    // padding-block: 12px;
-    // padding-inline: 12px;
-    // gap: 1rem;
+    font-size: 0.8rem;
+    padding-block: 20px;
+    padding-inline: 20px;
+    gap: 1rem;
   }
 
   @media (min-width: 1280px) {

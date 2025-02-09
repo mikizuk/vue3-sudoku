@@ -45,6 +45,21 @@ const onResetGame = () => store.resetGame()
   & > * {
     margin-bottom: 0.5rem;
   }
+
+  @media (min-width: 769px) {
+    padding-inline: 3rem;
+    gap: 1rem;
+    // display: flex;
+    display: grid;
+    // align-items: center;
+    font-size: 1rem;
+
+    // & > * {
+    // margin-inline: 0.5rem;
+    // flex-wrap: wrap;
+    // width: 50%;
+    // }
+  }
 }
 .game-difficulty--during-game {
   display: flex;

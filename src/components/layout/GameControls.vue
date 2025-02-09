@@ -46,6 +46,10 @@ const onHintClick = () => {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.4rem;
+
+  @media (min-width: 769px) {
+    gap: 1.5rem;
+  }
 }
 
 .finish-info {

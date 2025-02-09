@@ -76,6 +76,12 @@ watchEffect(() => {
     height: 34px;
     width: 34px;
     color: var(--charcoal-gray);
+
+    @media (min-width: 769px) {
+      /* border: 2px solid; */
+      height: 60px;
+      width: 60px;
+    }
   }
 
   /* .digits__item .digits__button:disabled, */
