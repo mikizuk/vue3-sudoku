@@ -10,13 +10,7 @@ import type {
   Records,
   SudokuState,
 } from '@/types/sudokuTypes'
-import {
-  DIFFICULTIES,
-  FALSE_SUDOKU_BOARD,
-  GET_BOX_INDEX,
-  INITIAL_REMAINING_HINTS,
-  NULL_SUDOKU_BOARD,
-} from '@/constants/constants'
+import { DIFFICULTIES, GET_BOX_INDEX, INITIAL_REMAINING_HINTS } from '@/constants/constants'
 import { useSudokuEngine } from '@/composables/useSudokuEngine'
 import { useScoreSystem } from '@/composables/useScoreSystem'
 import { formatDate } from '@/utils/dates'
@@ -52,9 +46,15 @@ export const useSudokuStore = defineStore('sudoku', {
       difficulties: DIFFICULTIES,
       hintsRemaining: INITIAL_REMAINING_HINTS,
       gameTime: elapsedTime,
-      solvedBoard: NULL_SUDOKU_BOARD,
-      originalSolvedBoard: FALSE_SUDOKU_BOARD,
-      playBoard: NULL_SUDOKU_BOARD,
+      solvedBoard: Array(9)
+        .fill(null)
+        .map(() => Array(9).fill(null)),
+      originalSolvedBoard: Array(9)
+        .fill(null)
+        .map(() => Array(9).fill(false)),
+      playBoard: Array(9)
+        .fill(null)
+        .map(() => Array(9).fill(null)),
       selectedCell: { row: null, col: null },
       gameScore: 0,
       hintsUsed: 0,
@@ -158,9 +158,15 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     // game logic | sudoku engine
     generateNewGame(difficulty: Difficulty) {
-      this.solvedBoard = NULL_SUDOKU_BOARD
-      this.originalSolvedBoard = FALSE_SUDOKU_BOARD
-      this.playBoard = NULL_SUDOKU_BOARD
+      this.solvedBoard = Array(9)
+        .fill(null)
+        .map(() => Array(9).fill(null))
+      this.originalSolvedBoard = Array(9)
+        .fill(null)
+        .map(() => Array(9).fill(false))
+      this.playBoard = Array(9)
+        .fill(null)
+        .map(() => Array(9).fill(null))
       this.setActualGameDifficulty(difficulty)
       this.changeGameStatus('playing')
 

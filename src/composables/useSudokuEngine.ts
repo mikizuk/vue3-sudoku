@@ -1,4 +1,4 @@
-import { DIFFICULTY_RANGES, TRUE_SUDOKU_BOARD } from '@/constants/constants'
+import { DIFFICULTY_RANGES } from '@/constants/constants'
 import type { Difficulty, SudokuBoard } from '@/types/sudokuTypes'
 import { getRandomNumber, shuffleArray } from '@/utils/randoms'
 
@@ -101,7 +101,9 @@ export function useSudokuEngine() {
     const range = DIFFICULTY_RANGES[difficulty]
     const cellsToRemove = getRandomNumber(range.min, range.max)
     const newBoard = JSON.parse(JSON.stringify(solvedBoard))
-    const originalBoard = TRUE_SUDOKU_BOARD
+    const originalBoard = Array(9)
+      .fill(null)
+      .map(() => Array(9).fill(true))
 
     let cellsRemoved = 0
     while (cellsRemoved < cellsToRemove) {
@@ -112,9 +114,13 @@ export function useSudokuEngine() {
         newBoard[randomRowIndex][randomColIndex] = null
         originalBoard[randomRowIndex][randomColIndex] = false
         cellsRemoved++
+      } else {
+        // originalBoard[randomRowIndex][randomColIndex] = true
       }
     }
 
+    console.log('newBoard', newBoard)
+    console.log('originalBoard', originalBoard)
     return {
       newBoard,
       originalBoard,

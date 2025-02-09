@@ -11,16 +11,6 @@ export const DIFFICULTY_RANGES: Record<Difficulty, DifficultyRange> = {
 
 export const WINNING_SCORE = 500
 
-export const NULL_SUDOKU_BOARD = Array(9)
-  .fill(null)
-  .map(() => Array(9).fill(null))
-export const FALSE_SUDOKU_BOARD = Array(9)
-  .fill(null)
-  .map(() => Array(9).fill(false))
-export const TRUE_SUDOKU_BOARD = Array(9)
-  .fill(null)
-  .map(() => Array(9).fill(true))
-
 export const WRONG_GUESS_POINTS = 1
 export const CORRECT_GUESS_POINTS = 5
 export const INITIAL_REMAINING_HINTS = 10

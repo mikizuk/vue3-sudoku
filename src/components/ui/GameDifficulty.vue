@@ -44,6 +44,7 @@ const onResetGame = () => store.resetGame()
 .game-difficulty--during-intro {
   & > * {
     margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
   }
 
   @media (min-width: 769px) {

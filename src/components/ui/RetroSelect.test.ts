@@ -28,12 +28,11 @@ describe('RetroSelect', () => {
   it('renders correct options', () => {
     const wrapper = createWrapper()
     const options = wrapper.findAll('option')
-    expect(options.length).toBe(5)
-    expect(options[0].text()).toBe('Testing')
-    expect(options[1].text()).toBe('Beginner')
-    expect(options[2].text()).toBe('Intermediate')
-    expect(options[3].text()).toBe('Hard')
-    expect(options[4].text()).toBe('Expert')
+    expect(options.length).toBe(4)
+    expect(options[0].text()).toBe('Beginner')
+    expect(options[1].text()).toBe('Intermediate')
+    expect(options[2].text()).toBe('Hard')
+    expect(options[3].text()).toBe('Expert')
   })
 
   it('emits change event with selected option', async () => {
