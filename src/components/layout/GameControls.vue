@@ -31,7 +31,7 @@ const onHintClick = () => {
     <div v-if="isGameFinished" class="finish-info">
       <p>Game finished!!!</p>
     </div>
-    <RetroButton @click="onHintClick" :disabled="isGamePaused">
+    <RetroButton @click="onHintClick" :disabled="isGamePaused || isGameFinished">
       <EmojiText>
         <template #emoji>💡</template>
         <template #text>Hint ({{ hintsRemaining }})</template>
