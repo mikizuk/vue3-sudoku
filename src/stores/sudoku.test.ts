@@ -199,4 +199,22 @@ describe('Sudoku Store', () => {
       expect(store.originalSolvedBoard).toBeDefined()
     })
   })
+
+  describe('Game End & Score Handling', () => {
+    it('should finish game and update state', () => {
+      store.finishGame()
+      expect(store.gameStatus).toBe('finished')
+    })
+
+    it('should update scoreboards correctly', () => {
+      store.gameScore = 1000
+      store.gameTime = 300
+      store.updateScoreBoards()
+
+      const records = store.gameScoreRecords[store.selectedDifficulty]
+      expect(records.length).toBeGreaterThan(0)
+      expect(records[0].score).toBe(1000)
+      expect(records[0].time).toBe(300)
+    })
+  })
 })

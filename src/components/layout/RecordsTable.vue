@@ -4,8 +4,6 @@ import { storeToRefs } from 'pinia'
 
 const store = useSudokuStore()
 const { difficulties, gameScoreRecords } = storeToRefs(store)
-
-console.log('gameScoreRecords', gameScoreRecords)
 </script>
 <template>
   <div class="records">
@@ -50,7 +48,7 @@ console.log('gameScoreRecords', gameScoreRecords)
 
 <style lang="scss" scoped>
 .records__title {
-  padding-block: 0.5rem;
+  padding-block: 0.3rem;
   text-align: center;
 }
 

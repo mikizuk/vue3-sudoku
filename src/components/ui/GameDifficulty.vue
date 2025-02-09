@@ -1,21 +1,17 @@
 <script setup lang="ts">
-import { useSudokuStore, type Difficulty } from '@/stores/sudoku'
+import { useSudokuStore } from '@/stores/sudoku'
 import RetroButton from '@/components/slots/RetroButton.vue'
 import RetroSelect from '@/components/ui/RetroSelect.vue'
 import EmojiText from '@/components/slots/EmojiText.vue'
 import { storeToRefs } from 'pinia'
+import type { Difficulty } from '@/types/sudokuTypes'
 
 const store = useSudokuStore()
 const { difficulties, selectedDifficulty } = storeToRefs(store)
 
-const onDifficultyChange = (value: Difficulty): void => {
-  store.setSelectedDifficulty(value)
-}
+const onDifficultyChange = (value: Difficulty): void => store.setSelectedDifficulty(value)
 const onStartGame = () => store.startGame()
-const onResetGame = () => {
-  console.info('reset!')
-  store.resetGame()
-}
+const onResetGame = () => store.resetGame()
 </script>
 
 <template>

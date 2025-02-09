@@ -41,7 +41,7 @@ describe('randoms', () => {
     it('shuffles an array of numbers', () => {
       const originalArray = [1, 2, 3, 4, 5]
       const shuffledArray = shuffleArray([...originalArray])
-      
+
       expect(shuffledArray.sort()).toEqual(originalArray)
     })
 

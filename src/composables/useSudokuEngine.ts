@@ -1,4 +1,4 @@
-import { DIFFICULTY_RANGES } from '@/constants/constants'
+import { DIFFICULTY_RANGES, TRUE_SUDOKU_BOARD } from '@/constants/constants'
 import type { Difficulty, SudokuBoard } from '@/types/sudokuTypes'
 import { getRandomNumber, shuffleArray } from '@/utils/randoms'
 
@@ -100,12 +100,8 @@ export function useSudokuEngine() {
   } => {
     const range = DIFFICULTY_RANGES[difficulty]
     const cellsToRemove = getRandomNumber(range.min, range.max)
-    // console.info('generatePlayBoard', difficulty, range, cellsToRemove, solvedBoard)
-
     const newBoard = JSON.parse(JSON.stringify(solvedBoard))
-    const originalBoard = Array(9)
-      .fill(null)
-      .map(() => Array(9).fill(true))
+    const originalBoard = TRUE_SUDOKU_BOARD
 
     let cellsRemoved = 0
     while (cellsRemoved < cellsToRemove) {
@@ -126,8 +122,13 @@ export function useSudokuEngine() {
   }
 
   // CHECK DIFFERENCES BETWEEN A SOLVED BOARD AND A PLAYING BOARD
-  const checkSection = (playBoard: SudokuBoard, solvedBoard: SudokuBoard, section: string, indexCheck: number): boolean => {
-    const uniqueDigits = new Set();
+  const checkSection = (
+    playBoard: SudokuBoard,
+    solvedBoard: SudokuBoard,
+    section: string,
+    indexCheck: number,
+  ): boolean => {
+    const uniqueDigits = new Set()
 
     if (section === 'row') {
       for (let col = 0; col < 9; col++) {
@@ -148,7 +149,7 @@ export function useSudokuEngine() {
     } else if (section === 'box') {
       const startingRow = Math.floor(indexCheck / 3) * 3
       const startingCol = (indexCheck % 3) * 3
-      for (let i = 0; i < 3; i++) {        
+      for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
           const checkedRow = startingRow + i
           const checkedCol = startingCol + j
@@ -160,19 +161,18 @@ export function useSudokuEngine() {
           }
         }
       }
-  
     }
 
     return uniqueDigits.size === 9
   }
   const checkIsBoardFinished = (playBoard: SudokuBoard, solvedBoard: SudokuBoard): boolean => {
-    return JSON.stringify(playBoard) === JSON.stringify(solvedBoard);
+    return JSON.stringify(playBoard) === JSON.stringify(solvedBoard)
   }
 
   return {
     generateSolvedBoard,
     modifyBoardForPlay,
     checkSection,
-    checkIsBoardFinished
+    checkIsBoardFinished,
   }
 }

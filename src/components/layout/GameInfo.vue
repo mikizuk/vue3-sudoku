@@ -16,7 +16,9 @@ const { formattedTime, actualGameDifficulty, gameScore } = storeToRefs(store)
       <span :class="`color--${actualGameDifficulty}`">{{ capitalize(actualGameDifficulty) }}</span>
     </div>
 
-    <div><strong>Score:</strong><span>{{ gameScore }}</span></div>
+    <div>
+      <strong>Score:</strong><span>{{ gameScore }}</span>
+    </div>
   </div>
 </template>
 

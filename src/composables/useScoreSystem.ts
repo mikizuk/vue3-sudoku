@@ -5,7 +5,6 @@ import {
   GET_TOTAL_SCORE,
   INITIAL_HINT_PENALTY,
   NEXT_HINT_PENALTY,
-  WINNING_SCORE,
   WRONG_GUESS_POINTS,
 } from '@/constants/constants'
 
@@ -39,6 +38,6 @@ export function useScoreSystem() {
     wrongGuess,
     useHint,
     resetScore,
-    calculateWinningScore
+    calculateWinningScore,
   }
 }
