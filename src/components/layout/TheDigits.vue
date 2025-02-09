@@ -78,13 +78,12 @@ watchEffect(() => {
     color: var(--charcoal-gray);
 
     @media (min-width: 769px) {
-      /* border: 2px solid; */
-      height: 70px;
-      width: 70px;
+      font-size: 1.2rem;
+      height: 60px;
+      width: 90px;
     }
   }
 
-  /* .digits__item .digits__button:disabled, */
   .digits__item .digits__button--disabled {
     border-color: var(--soft-gray);
     background-color: inherit;

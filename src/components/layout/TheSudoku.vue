@@ -78,7 +78,7 @@ main {
     margin-block: 0.6rem;
     // border: 1px solid red;
     @media (min-width: 769px) {
-      margin-block: 2rem;
+      margin-block: 1.5rem;
     }
   }
 }

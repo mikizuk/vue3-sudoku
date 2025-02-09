@@ -15,8 +15,8 @@ describe('GameDifficulty', () => {
         sudoku: {
           isGameOn: false,
           isIntro: true,
-          difficulty: 'testing',
-          difficulties: ['testing', 'beginner', 'intermediate', 'hard', 'expert'],
+          difficulty: 'beginner',
+          difficulties: ['beginner', 'intermediate', 'hard', 'expert'],
         },
       },
     })

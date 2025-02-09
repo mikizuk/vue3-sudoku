@@ -1,6 +1,6 @@
 import { type Ref } from 'vue'
 
-export type Difficulty = 'testing' | 'beginner' | 'intermediate' | 'hard' | 'expert'
+export type Difficulty = 'beginner' | 'intermediate' | 'hard' | 'expert'
 export type GameStatus = 'notStarted' | 'playing' | 'paused' | 'finished'
 export type GameAction = 'correct' | 'error' | 'hint' | 'reset' | 'finish'
 export type SectionType = 'row' | 'col' | 'box'

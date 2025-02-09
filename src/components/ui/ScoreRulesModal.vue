@@ -24,7 +24,6 @@ const { isModalOpen } = storeToRefs(store)
             <p>The game features 4 ranks with varying numbers of pre-filled cells (out of 81):</p>
 
             <ul>
-              <li>Testing</li>
               <li>Beginner: 36-40 cells visible</li>
               <li>Intermediate: 32-36 cells visible</li>
               <li>Hard: 28-32 cells visible</li>

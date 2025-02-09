@@ -118,7 +118,7 @@ describe('useSudokuEngine', () => {
 
   describe('getRandomNumber', () => {
     it('removes varying number of cells based on difficulty', () => {
-      const difficulties: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert']
+      const difficulties: Difficulty[] = ['beginner', 'intermediate', 'hard', 'expert']
 
       difficulties.forEach((difficulty) => {
         const solvedBoard = sudokuEngine.generateSolvedBoard()

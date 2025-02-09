@@ -8,7 +8,7 @@ describe('RetroSelect', () => {
       props: {
         label: 'Difficulty',
         selected: 'beginner',
-        options: ['testing', 'beginner', 'intermediate', 'hard', 'expert'],
+        options: ['beginner', 'intermediate', 'hard', 'expert'],
         hideLabel: false,
         ...props,
       },

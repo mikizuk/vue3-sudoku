@@ -88,8 +88,7 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
     text-align: center;
 
     @media (min-width: 769px) {
-      /* height: 45px; */
-      height: 55px;
+      height: 48px;
       width: 45px;
     }
   }
@@ -104,7 +103,7 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
       border: 3px solid;
       /* border: 2px solid red; */
       /* margin: 3px; */
-      height: 45px;
+      height: 48px;
       width: 45px;
     }
   }
@@ -118,7 +117,7 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
     width: 100%;
 
     @media (min-width: 769px) {
-      font-size: 0.8rem;
+      font-size: 1rem;
     }
   }
 

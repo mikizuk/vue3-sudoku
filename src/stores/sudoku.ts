@@ -28,7 +28,6 @@ const getLocalRecords = () => {
     return JSON.parse(localStorage.getItem('sudokuRecords')!)
   } else {
     return {
-      testing: [],
       beginner: [],
       intermediate: [],
       hard: [],
@@ -48,8 +47,8 @@ export const useSudokuStore = defineStore('sudoku', {
       gameStatus: 'notStarted',
       isIntro: null,
       isModalOpen: false,
-      selectedDifficulty: 'testing' as Difficulty,
-      actualGameDifficulty: 'testing' as Difficulty,
+      selectedDifficulty: 'beginner' as Difficulty,
+      actualGameDifficulty: 'beginner' as Difficulty,
       difficulties: DIFFICULTIES,
       hintsRemaining: INITIAL_REMAINING_HINTS,
       gameTime: elapsedTime,
