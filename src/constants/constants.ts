@@ -3,7 +3,7 @@ import type { Difficulty, DifficultyRange } from '@/types/sudokuTypes'
 export const DIFFICULTIES: Difficulty[] = ['testing', 'beginner', 'intermediate', 'hard', 'expert']
 
 export const DIFFICULTY_RANGES: Record<Difficulty, DifficultyRange> = {
-  testing: { min: 5, max: 6 },
+  testing: { min: 3, max: 4 },
   beginner: { min: 41, max: 45 },
   intermediate: { min: 45, max: 49 },
   hard: { min: 49, max: 53 },
@@ -12,8 +12,12 @@ export const DIFFICULTY_RANGES: Record<Difficulty, DifficultyRange> = {
 
 export const WINNING_SCORE = 500
 
-export const NULL_SUDOKU_BOARD = Array(9).fill(null).map(() => Array(9).fill(null))
-export const FALSE_SUDOKU_BOARD = Array(9).fill(null).map(() => Array(9).fill(false))
+export const NULL_SUDOKU_BOARD = Array(9)
+  .fill(null)
+  .map(() => Array(9).fill(null))
+export const FALSE_SUDOKU_BOARD = Array(9)
+  .fill(null)
+  .map(() => Array(9).fill(false))
 
 export const WRONG_GUESS_POINTS = 1
 export const CORRECT_GUESS_POINTS = 5

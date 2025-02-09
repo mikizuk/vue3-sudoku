@@ -1,6 +1,15 @@
 import { useTimer } from '@/composables/useTimer'
+import { toRaw } from 'vue'
 import { defineStore } from 'pinia'
-import type { Cell, CompletedSection, Difficulty, GameAction, GameStatus, SudokuState } from '@/types/sudokuTypes'
+import type {
+  Cell,
+  CompletedSection,
+  Difficulty,
+  GameAction,
+  GameStatus,
+  Records,
+  SudokuState,
+} from '@/types/sudokuTypes'
 import {
   DIFFICULTIES,
   FALSE_SUDOKU_BOARD,
@@ -10,35 +19,56 @@ import {
 } from '@/constants/constants'
 import { useSudokuEngine } from '@/composables/useSudokuEngine'
 import { useScoreSystem } from '@/composables/useScoreSystem'
+import { formatDate } from '@/utils/dates'
 
 const { elapsedTime, startTime, pauseTime, resetTime } = useTimer()
 
-export const useSudokuStore = defineStore('sudoku', {
-  state: (): SudokuState => ({
-    gameStatus: 'notStarted',
-    isIntro: null,
-    isModalOpen: false,
-    selectedDifficulty: 'beginner' as Difficulty,
-    actualGameDifficulty: 'beginner' as Difficulty,
-    difficulties: DIFFICULTIES,
-    hintsRemaining: INITIAL_REMAINING_HINTS,
-    gameTime: elapsedTime,
-    solvedBoard: NULL_SUDOKU_BOARD,
-    originalSolvedBoard: FALSE_SUDOKU_BOARD,
-    playBoard: NULL_SUDOKU_BOARD,
-    selectedCell: { row: null, col: null },
-    gameScore: 0,
-    hintsUsed: 0,
-    completedSections: [],
-  }),
+const getLocalRecords = () => {
+  if (localStorage.getItem('sudokuRecords')) {
+    return JSON.parse(localStorage.getItem('sudokuRecords')!)
+  } else {
+    return {
+      testing: [],
+      beginner: [],
+      intermediate: [],
+      hard: [],
+      expert: [],
+    }
+  }
+}
 
+const setLocalRecords = (records: Records) => {
+  localStorage.setItem('sudokuRecords', JSON.stringify(records))
+}
+
+export const useSudokuStore = defineStore('sudoku', {
+  state: (): SudokuState => {
+    const initialRecords = getLocalRecords()
+    return {
+      gameStatus: 'notStarted',
+      isIntro: null,
+      isModalOpen: false,
+      selectedDifficulty: 'testing' as Difficulty,
+      actualGameDifficulty: 'testing' as Difficulty,
+      difficulties: DIFFICULTIES,
+      hintsRemaining: INITIAL_REMAINING_HINTS,
+      gameTime: elapsedTime,
+      solvedBoard: NULL_SUDOKU_BOARD,
+      originalSolvedBoard: FALSE_SUDOKU_BOARD,
+      playBoard: NULL_SUDOKU_BOARD,
+      selectedCell: { row: null, col: null },
+      gameScore: 0,
+      hintsUsed: 0,
+      completedSections: [],
+      gameScoreRecords: initialRecords,
+    }
+  },
   getters: {
     isGameOn(): boolean {
       return this.gameStatus !== 'notStarted'
     },
     canUseHint(): boolean {
       return this.hintsRemaining > 0
-      // and selected cell is empty TODO:
     },
     formattedTime(): string {
       const minutes = Math.floor(this.gameTime / 60)
@@ -150,7 +180,8 @@ export const useSudokuStore = defineStore('sudoku', {
         row === null ||
         col === null ||
         this.playBoard[row][col] === this.solvedBoard[row][col] // is already a correct digit
-      ) return
+      )
+        return
 
       this.playBoard[row][col] = this.solvedBoard[row][col]
 
@@ -165,11 +196,13 @@ export const useSudokuStore = defineStore('sudoku', {
         row === null ||
         col === null ||
         this.playBoard[row][col] === this.solvedBoard[row][col] // is already a correct digit
-      ) return
+      )
+        return
 
       this.playBoard[row][col] = digit
 
-      if (digit === this.solvedBoard[row][col]) { // is corect digit entered
+      if (digit === this.solvedBoard[row][col]) {
+        // is corect digit entered
         this.updateScore('correct')
         this.checkBoard(row, col)
       } else {
@@ -178,13 +211,7 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     // score system
     updateScore(action: GameAction) {
-      const {
-        correctGuess,
-        wrongGuess,
-        useHint,
-        resetScore,
-        calculateWinningScore
-      } = useScoreSystem() // this.gameScore
+      const { correctGuess, wrongGuess, useHint, resetScore, calculateWinningScore } = useScoreSystem()
 
       switch (action) {
         case 'finish':
@@ -233,7 +260,7 @@ export const useSudokuStore = defineStore('sudoku', {
       }
 
       if (checkEndGame && sudokuEngine.checkIsBoardFinished(this.playBoard, this.solvedBoard)) {
-        this.finishGame()  
+        this.finishGame()
       }
     },
     // endgame
@@ -241,6 +268,21 @@ export const useSudokuStore = defineStore('sudoku', {
       pauseTime()
       this.changeGameStatus('finished')
       this.updateScore('finish')
+      this.updateScoreBoards()
+    },
+    updateScoreBoards() {
+      let actualBoard = toRaw(this.gameScoreRecords[this.selectedDifficulty])
+      const newRecord = toRaw({
+        score: this.gameScore,
+        time: this.gameTime,
+        date: formatDate(new Date()),
+      })
+      actualBoard.push(newRecord)
+      actualBoard = actualBoard.sort((a, b) => b.score - a.score)
+      actualBoard = actualBoard.slice(0, 3)
+
+      this.gameScoreRecords[this.selectedDifficulty] = actualBoard
+      setLocalRecords(this.gameScoreRecords)
     },
   },
 })

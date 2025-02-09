@@ -20,6 +20,16 @@ export interface CompletedSection {
   index: number
 }
 
+export interface ScoreRecord {
+  score: number
+  time: number
+  date: string
+}
+
+export type Records = {
+  [K in Difficulty]: ScoreRecord[]
+}
+
 export type SudokuBoard = number[][] | null[][]
 
 export interface SudokuState {
@@ -30,7 +40,7 @@ export interface SudokuState {
   actualGameDifficulty: Difficulty
   difficulties: Difficulty[]
   hintsRemaining: number
-  gameTime: Ref<number, number>
+  gameTime: Ref<number>
   solvedBoard: SudokuBoard
   originalSolvedBoard: SudokuBoard
   playBoard: SudokuBoard
@@ -38,4 +48,5 @@ export interface SudokuState {
   gameScore: number
   hintsUsed: number
   completedSections: CompletedSection[]
+  gameScoreRecords: Records
 }

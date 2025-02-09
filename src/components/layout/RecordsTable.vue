@@ -3,11 +3,13 @@ import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 
 const store = useSudokuStore()
-const { difficulties } = storeToRefs(store)
+const { difficulties, gameScoreRecords } = storeToRefs(store)
+
+console.log('gameScoreRecords', gameScoreRecords)
 </script>
 <template>
   <div class="records">
-    <h4 class="records__title">Records</h4>
+    <h4 class="records__title">Top 3</h4>
     <ul class="records__table-list">
       <li class="records__table-item" v-for="difficulty in difficulties" :key="difficulty">
         <table class="table">
@@ -24,30 +26,20 @@ const { difficulties } = storeToRefs(store)
               <th scope="col">Date</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-if="false">
+          <tbody v-if="gameScoreRecords[difficulty].length === 0">
+            <tr></tr>
+            <tr></tr>
+            <tr>
+              <td colspan="1"></td>
               <td colspan="4">No records yet</td>
             </tr>
-            <!-- 1st place -->
-            <tr v-if="true">
-              <td>1</td>
-              <td>1492</td>
-              <td>8:00</td>
-              <td>2/2/2024</td>
-            </tr>
-            <!-- 2nd place -->
-            <tr v-if="true">
-              <td>2</td>
-              <td>900</td>
-              <td>7:45</td>
-              <td>2/2/2024</td>
-            </tr>
-            <!-- 3rd place -->
-            <tr v-if="true">
-              <td>3</td>
-              <td>564</td>
-              <td>9:45</td>
-              <td>2/2/2024</td>
+          </tbody>
+          <tbody v-else>
+            <tr v-for="(recordPerDifficulty, index) in gameScoreRecords[difficulty]" :key="index">
+              <td>{{ index + 1 }}</td>
+              <td>{{ recordPerDifficulty.score }}</td>
+              <td>{{ recordPerDifficulty.time }} s</td>
+              <td>{{ recordPerDifficulty.date }}</td>
             </tr>
           </tbody>
         </table>
