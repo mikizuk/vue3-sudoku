@@ -52,7 +52,7 @@ main {
 
   @media (min-width: 769px) {
     // padding-block: 22%;
-    padding-inline: 20px;
+    padding-inline: 30px;
   }
 
   // @media (min-width: 1280px) {

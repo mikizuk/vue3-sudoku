@@ -79,8 +79,8 @@ watchEffect(() => {
 
     @media (min-width: 769px) {
       /* border: 2px solid; */
-      height: 60px;
-      width: 60px;
+      height: 70px;
+      width: 70px;
     }
   }
 

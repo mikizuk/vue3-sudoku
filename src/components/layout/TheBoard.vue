@@ -73,8 +73,11 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
 .board {
   background-color: var(--white);
   border: 2px solid var(--charcoal-gray);
-  border-radius: 3px;
+  border-radius: 5px;
 
+  @media (min-width: 769px) {
+    border-spacing: 5px;
+  }
   width: 100%;
   /* max-width: 1200px; */
 
@@ -85,7 +88,8 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
     text-align: center;
 
     @media (min-width: 769px) {
-      height: 45px;
+      /* height: 45px; */
+      height: 55px;
       width: 45px;
     }
   }
@@ -97,7 +101,9 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
     text-align: center;
 
     @media (min-width: 769px) {
-      border: 2px solid;
+      border: 3px solid;
+      /* border: 2px solid red; */
+      /* margin: 3px; */
       height: 45px;
       width: 45px;
     }
@@ -110,13 +116,25 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
     border: 0;
     height: 100%;
     width: 100%;
+
+    @media (min-width: 769px) {
+      font-size: 0.8rem;
+    }
   }
 
   .board__cell:nth-child(3n) {
     border-right: 3px solid var(--charcoal-gray);
+
+    @media (min-width: 769px) {
+      border-right: 5px solid var(--charcoal-gray);
+    }
   }
   .board__row:nth-child(3n) .board__cell {
     border-bottom: 3px solid var(--charcoal-gray);
+
+    @media (min-width: 769px) {
+      border-bottom: 5px solid var(--charcoal-gray);
+    }
   }
 
   .board__cell--original {
