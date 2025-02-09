@@ -1,7 +1,13 @@
 import { useTimer } from '@/composables/useTimer'
 import { defineStore } from 'pinia'
 import type { Cell, CompletedSection, Difficulty, GameAction, GameStatus, SudokuState } from '@/types/sudokuTypes'
-import { DIFFICULTIES, GET_BOX_INDEX, INITIAL_REMAINING_HINTS } from '@/constants/constants'
+import {
+  DIFFICULTIES,
+  FALSE_SUDOKU_BOARD,
+  GET_BOX_INDEX,
+  INITIAL_REMAINING_HINTS,
+  NULL_SUDOKU_BOARD,
+} from '@/constants/constants'
 import { useSudokuEngine } from '@/composables/useSudokuEngine'
 import { useScoreSystem } from '@/composables/useScoreSystem'
 
@@ -17,15 +23,9 @@ export const useSudokuStore = defineStore('sudoku', {
     difficulties: DIFFICULTIES,
     hintsRemaining: INITIAL_REMAINING_HINTS,
     gameTime: elapsedTime,
-    solvedBoard: Array(9)
-      .fill(null)
-      .map(() => Array(9).fill(null)),
-    originalSolvedBoard: Array(9)
-      .fill(null)
-      .map(() => Array(9).fill(false)),
-    playBoard: Array(9)
-      .fill(null)
-      .map(() => Array(9).fill(null)),
+    solvedBoard: NULL_SUDOKU_BOARD,
+    originalSolvedBoard: FALSE_SUDOKU_BOARD,
+    playBoard: NULL_SUDOKU_BOARD,
     selectedCell: { row: null, col: null },
     gameScore: 0,
     hintsUsed: 0,
@@ -51,17 +51,15 @@ export const useSudokuStore = defineStore('sudoku', {
     },
     isGamePaused(): boolean {
       return this.gameStatus === 'paused'
-      // disable Reset & Hint buttons TODO:
     },
     isGameFinished(): boolean {
       return this.gameStatus === 'finished'
-    }
+    },
   },
 
   actions: {
     // game control
     changeGameStatus(newStatus: GameStatus) {
-      console.info('--- changeGameStatus', newStatus)
       this.gameStatus = newStatus
     },
     // intro shown
@@ -89,9 +87,11 @@ export const useSudokuStore = defineStore('sudoku', {
     deductHints() {
       this.hintsRemaining -= 1
     },
+    resetHintsUsed() {
+      this.hintsUsed = 0
+    },
     // game controls
     togglePause() {
-
       if (this.isGamePlaying) {
         this.changeGameStatus('paused')
         pauseTime()
@@ -119,14 +119,19 @@ export const useSudokuStore = defineStore('sudoku', {
       startTime()
     },
     resetGame() {
+      resetTime()
+      this.updateScore('reset')
       this.resetHintsNumber()
       this.clearSelectedCell()
+      this.resetHintsUsed()
+      this.resetCompletedSections()
       this.generateNewGame(this.selectedDifficulty)
-      this.updateScore('reset')
-      resetTime()
     },
     // game logic | sudoku engine
     generateNewGame(difficulty: Difficulty) {
+      this.solvedBoard = NULL_SUDOKU_BOARD
+      this.originalSolvedBoard = FALSE_SUDOKU_BOARD
+      this.playBoard = NULL_SUDOKU_BOARD
       this.setActualGameDifficulty(difficulty)
       this.changeGameStatus('playing')
 
@@ -163,64 +168,79 @@ export const useSudokuStore = defineStore('sudoku', {
       ) return
 
       this.playBoard[row][col] = digit
-      
+
       if (digit === this.solvedBoard[row][col]) { // is corect digit entered
         this.updateScore('correct')
         this.checkBoard(row, col)
-    } else {
+      } else {
         this.updateScore('error')
       }
     },
     // score system
     updateScore(action: GameAction) {
-      const { correctGuess, wrongGuess, useHint, resetScore } = useScoreSystem() // this.gameScore
+      const {
+        correctGuess,
+        wrongGuess,
+        useHint,
+        resetScore,
+        calculateWinningScore
+      } = useScoreSystem() // this.gameScore
 
       switch (action) {
+        case 'finish':
+          calculateWinningScore(this.gameTime)
+          this.clearSelectedCell()
+          break
         case 'hint':
           useHint()
-            this.clearSelectedCell()
-          break;
-          case 'correct':
-            correctGuess()
-            this.clearSelectedCell()
-        break;
-        case 'error': wrongGuess()
-          break;
-        case 'reset': resetScore()
-          break;
+          this.clearSelectedCell()
+          break
+        case 'correct':
+          correctGuess()
+          this.clearSelectedCell()
+          break
+        case 'error':
+          wrongGuess()
+          break
+        case 'reset':
+          resetScore()
+          break
       }
     },
     // check board & endgame
     addCompletedSection(section: CompletedSection) {
       this.completedSections.push(section)
     },
+    resetCompletedSections() {
+      this.completedSections.length = 0
+    },
     checkBoard(row: number, col: number) {
       const sudokuEngine = useSudokuEngine()
       let checkEndGame = false
-      
+
       if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'row', row)) {
-        this.addCompletedSection({ type: 'row', index: row})
+        this.addCompletedSection({ type: 'row', index: row })
         checkEndGame = true
       }
       if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'col', col)) {
-        this.addCompletedSection({ type: 'col', index: col})
+        this.addCompletedSection({ type: 'col', index: col })
         checkEndGame = true
       }
       const boxIndex = GET_BOX_INDEX(row, col)
       if (sudokuEngine.checkSection(this.playBoard, this.solvedBoard, 'box', boxIndex)) {
-        this.addCompletedSection({ type: 'box', index: boxIndex})
+        this.addCompletedSection({ type: 'box', index: boxIndex })
         checkEndGame = true
       }
 
       if (checkEndGame && sudokuEngine.checkIsBoardFinished(this.playBoard, this.solvedBoard)) {
-        this.finishGame()
+        this.finishGame()  
       }
     },
     // endgame
     finishGame() {
-      this.changeGameStatus('finished')
       pauseTime()
-      this.completedSections.length = 0
-    }
+      this.changeGameStatus('finished')
+      this.updateScore('finish')
+    },
   },
 })

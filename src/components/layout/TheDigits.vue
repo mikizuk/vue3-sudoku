@@ -33,7 +33,7 @@ const onDigit = (e: number) => store.onDigitClick(e)
     <li class="digits__item" v-for="digit in availableDigits" :key="digit.value">
       <button
         class="digits__button"
-        :class="{'digits__button--disabled': !digit.isAvailable}"
+        :class="{'digits__button--disabled': !digit.isAvailable || isGamePaused}"
         @click="onDigit(digit.value)"
         :disabled="!digit.isAvailable || isGamePaused"
         >

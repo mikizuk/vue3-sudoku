@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { useSudokuStore } from '@/stores/sudoku'
 import { storeToRefs } from 'pinia'
 import { GET_BOX_INDEX } from '@/constants/constants'
@@ -20,13 +20,14 @@ const {
 const onCellClick = (row: number, col: number): void => {
   store.setSelectedCell({ row, col })
 }
-
-watch(() => playBoard.value, () => {
-  showAnimation.value = true
+watchEffect(() => {
+  if (completedSections.value.length) {
+    showAnimation.value = true
     setTimeout(() => {
       showAnimation.value = false
     }, 1000)
-}, { deep: true})
+  }
+})
 
 const getCellClasses = computed(() => (row: number, col: number) => ({
   'board__cell--selected': row === selectedCell.value.row && col === selectedCell.value.col,
