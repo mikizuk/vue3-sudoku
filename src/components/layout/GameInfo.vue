@@ -25,7 +25,6 @@ const { formattedTime, actualGameDifficulty, gameScore } = storeToRefs(store)
 <style lang="scss" scoped>
 .results {
   display: flex;
-  // justify-content: space-evenly;
   justify-content: space-between;
 
   @media (min-width: 769px) {

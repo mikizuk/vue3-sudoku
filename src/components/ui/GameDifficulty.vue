@@ -40,7 +40,6 @@ const onResetGame = () => store.resetGame()
 </template>
 
 <style lang="scss" scoped>
-// .game-difficulty { }
 .game-difficulty--during-intro {
   & > * {
     margin-bottom: 0.5rem;
@@ -50,23 +49,13 @@ const onResetGame = () => store.resetGame()
   @media (min-width: 769px) {
     padding-inline: 3rem;
     gap: 1rem;
-    // display: flex;
     display: grid;
-    // align-items: center;
     font-size: 1rem;
-
-    // & > * {
-    // margin-inline: 0.5rem;
-    // flex-wrap: wrap;
-    // width: 50%;
-    // }
   }
 }
 .game-difficulty--during-game {
   display: flex;
-  // flex-wrap: wrap;
   justify-content: space-between;
-  // gap: 0.4rem;
   width: 100%;
 }
 </style>

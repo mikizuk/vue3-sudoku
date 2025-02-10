@@ -56,13 +56,6 @@ watchEffect(() => {
   list-style: none;
   display: flex;
   justify-content: space-between;
-  /* gap: 1rem; */
-
-  /* .digits__item { */
-  /* border: 2px solid var(--charcoal-gray); */
-  /* border-radius: 3px; */
-  /* padding: 4px; */
-  /* } */
 
   .digits__item:active {
     outline: 2px solid var(--royal-blue);

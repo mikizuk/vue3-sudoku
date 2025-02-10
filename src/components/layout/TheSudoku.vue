@@ -48,21 +48,10 @@ main {
   flex: 1;
   padding-top: 5px;
   padding-inline: 8px;
-  // border: 1px solid green;
 
   @media (min-width: 769px) {
-    // padding-block: 22%;
     padding-inline: 30px;
   }
-
-  // @media (min-width: 1280px) {
-  //   padding-block: 15%;
-  //   padding-inline: 20px;
-  // }
-  /* display: grid; */
-  /* flex-direction: column;
-  justify-content: center;
-  align-items: center; */
 }
 
 .intro-section {
@@ -76,7 +65,6 @@ main {
   .board,
   .records {
     margin-block: 0.6rem;
-    // border: 1px solid red;
     @media (min-width: 769px) {
       margin-block: 1.5rem;
     }

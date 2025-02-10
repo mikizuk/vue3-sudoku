@@ -43,28 +43,18 @@ const onToggleModal = () => {
 
   @media (min-width: 769px) {
     font-size: 1rem;
-    // border: 1px solid red;
     padding-block: 20px;
     padding-inline: 20px;
-  }
-
-  @media (min-width: 1280px) {
-    // padding-block: 20px;
-    // padding-inline: 20px;
   }
 }
 
 .nav-list {
-  // display: flex;
-  // gap: 24px;
   list-style: none;
 }
 
 .nav-list__item {
   box-shadow: inset 0 0 0 0 var(--sky-blue);
   color: var(--sky-blue);
-  // padding: 0 0.25rem;
-  // margin: 0 -0.25rem;
   transition:
     color 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out;

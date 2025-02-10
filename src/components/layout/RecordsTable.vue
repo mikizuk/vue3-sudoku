@@ -53,7 +53,6 @@ const { difficulties, gameScoreRecords } = storeToRefs(store)
 }
 
 .records__table-list {
-  /* border: 1px solid green; */
   list-style: none;
   display: flex;
   height: 100%;
@@ -63,9 +62,7 @@ const { difficulties, gameScoreRecords } = storeToRefs(store)
   scrollbar-width: thin;
 
   gap: 1rem;
-  /*  */
   scroll-snap-type: x mandatory;
-  // scroll-snap-points-y: repeat(300px);
   scroll-snap-type: x mandatory;
 
   .records__table-item {
@@ -78,7 +75,6 @@ const { difficulties, gameScoreRecords } = storeToRefs(store)
   width: 300px;
   border: 2px solid var(--charcoal-gray);
   border-radius: 3px;
-  /*  */
   scroll-snap-align: start;
 
   .table__caption {
@@ -87,8 +83,6 @@ const { difficulties, gameScoreRecords } = storeToRefs(store)
 
   @media (min-width: 769px) {
     font-size: 0.8rem;
-    // padding: 0.4rem;
-
     border-spacing: 10px 10px;
   }
 }

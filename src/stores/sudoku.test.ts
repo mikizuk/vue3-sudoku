@@ -161,13 +161,6 @@ describe('Sudoku Store', () => {
   })
 
   describe('Digit Actions', () => {
-    // it('should handle digit click', () => {
-    //   store.changeGameStatus('playing')
-    //   store.setSelectedCell({ row: 1, col: 1 })
-    //   store.onDigitClick(5)
-    //   expect(store.playBoard[1][1]).toBe(5)
-    // })
-
     it('should not handle digit click when game is paused', () => {
       store.changeGameStatus('paused')
       store.setSelectedCell({ row: 1, col: 1 })

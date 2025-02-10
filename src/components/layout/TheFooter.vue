@@ -36,17 +36,12 @@ const version: string = __APP_VERSION__
   position: sticky;
   bottom: 0;
   background-color: var(--charcoal-gray);
-  // background-color: var(--charcoal-gray);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
   font-size: 0.5rem;
-
-  // padding-top: 6px;
-  // padding-block: 4px;
-  // padding-inline: 2px;
   gap: 0.5rem;
 
   @media (min-width: 769px) {
@@ -54,12 +49,6 @@ const version: string = __APP_VERSION__
     padding-block: 20px;
     padding-inline: 20px;
     gap: 1rem;
-  }
-
-  @media (min-width: 1280px) {
-    // padding-block: 20px;
-    // padding-inline: 20px;
-    // gap: 2rem;
   }
 }
 .footer__separator {

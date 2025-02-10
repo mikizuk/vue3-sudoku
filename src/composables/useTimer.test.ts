@@ -45,7 +45,6 @@ describe('useTimer', () => {
 
     expect(elapsedTime.value).toBe(0)
 
-    // Verify timer continues after reset
     vi.advanceTimersByTime(1000)
     expect(elapsedTime.value).toBe(1)
   })

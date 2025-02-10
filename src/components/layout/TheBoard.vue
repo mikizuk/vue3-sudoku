@@ -93,7 +93,6 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
     }
   }
   .board__cell {
-    /* aspect-ratio: 1/1; */
     height: 30px;
     width: 30px;
     border: 1px solid;
@@ -101,8 +100,6 @@ const isBoardBlurred = computed(() => isGamePaused.value || gameTime.value === 0
 
     @media (min-width: 769px) {
       border: 3px solid;
-      /* border: 2px solid red; */
-      /* margin: 3px; */
       height: 48px;
       width: 45px;
     }

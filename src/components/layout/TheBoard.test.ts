@@ -62,7 +62,6 @@ describe('TheBoard', () => {
     store = useSudokuStore()
   })
 
-  // Rest of the tests remain the same...
   it('renders the board with correct structure', () => {
     expect(wrapper.find('table.board').exists()).toBe(true)
     expect(wrapper.findAll('tr.board__row')).toHaveLength(9)
@@ -82,19 +81,7 @@ describe('TheBoard', () => {
       expect(nonSelectedButton.classes()).not.toContain('board__cell--selected')
     })
 
-    // it('identifies correct cells', async () => {
-    //   // Set a correct value in an empty cell
-    //   const row = 0
-    //   const col = 1 // This cell is null in playBoard and false in originalSolvedBoard
-    //   store.playBoard[row][col] = 2 // Matches solved board value
-    //   await wrapper.vm.$nextTick()
-
-    //   const correctButton = wrapper.findAll('button.board__button')[row * 9 + col]
-    //   expect(correctButton.classes()).toContain('board__cell--correct')
-    // })
-
     it('identifies error cells', async () => {
-      // Set an incorrect value in an empty cell
       const row = 0
       const col = 1
       store.playBoard[row][col] = 5 // Doesn't match solved board value (2)
@@ -105,17 +92,14 @@ describe('TheBoard', () => {
     })
 
     it('identifies original cells', async () => {
-      // Test an original cell (1,1) which has true in originalSolvedBoard
       const originalButton = wrapper.findAll('button.board__button')[1 * 9 + 1] // (1,1) position
       expect(originalButton.classes()).toContain('board__cell--original')
 
-      // Test a non-original cell
       const nonOriginalButton = wrapper.findAll('button.board__button')[0 * 9 + 1] // (0,1) position
       expect(nonOriginalButton.classes()).not.toContain('board__cell--original')
     })
 
     it('handles empty cells correctly', async () => {
-      // Test a cell that's initially empty (null)
       const emptyButton = wrapper.findAll('button.board__button')[0 * 9 + 1] // (0,1) position
       expect(emptyButton.classes()).not.toContain('board__cell--error')
       expect(emptyButton.classes()).not.toContain('board__cell--correct')
