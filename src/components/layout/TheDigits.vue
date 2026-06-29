@@ -73,7 +73,7 @@ watchEffect(() => {
     @media (min-width: 769px) {
       font-size: 1.2rem;
       height: 60px;
-      width: 90px;
+      width: 76px;
     }
   }
 

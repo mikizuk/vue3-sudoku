@@ -50,6 +50,8 @@ main {
   padding-inline: 8px;
 
   @media (min-width: 769px) {
+    align-self: center;
+    max-width: 800px;
     padding-inline: 30px;
   }
 }
